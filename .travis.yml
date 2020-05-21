@@ -1,0 +1,5 @@
+addons:
+   sonarcloud:
+     organization: "isaaclc98"
+     token:
+       secure: 474cd36e24d19b876f9e4b19e056ce9d83e18ccc 
