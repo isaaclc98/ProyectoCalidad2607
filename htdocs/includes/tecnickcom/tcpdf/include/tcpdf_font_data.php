@@ -45,7 +45,7 @@
  * @version 1.0.001
  * @author Nicola Asuni - info@tecnick.com
  */
-class  {
+class TcpdfFontData {
 
 /**
  * Unicode code for Left-to-Right Mark.
