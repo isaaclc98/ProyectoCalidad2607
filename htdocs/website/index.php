@@ -40,7 +40,10 @@ require_once DOL_DOCUMENT_ROOT.'/core/class/html.formother.class.php';
 require_once DOL_DOCUMENT_ROOT.'/website/class/website.class.php';
 require_once DOL_DOCUMENT_ROOT.'/website/class/websitepage.class.php';
 
-$langs->loadLangs(array("admin","other","website","errors"));
+CONSTERROR = "errors";
+WEBSITE = "website";
+
+$langs->loadLangs(array("admin","other",WEBSITE,CONSTERROR));
 
 if (! $user->rights->website->read) accessforbidden();
 
@@ -65,9 +68,10 @@ $section_dir = GETPOST('section_dir', 'alpha');
 $file_manager = GETPOST('file_manager', 'alpha');
 $replacesite = GETPOST('replacesite', 'alpha');
 
+PREVIEW = 'preview';
 if (GETPOST('deletesite', 'alpha')) { $action='deletesite'; }
 if (GETPOST('delete', 'alpha')) { $action='delete'; }
-if (GETPOST('preview', 'alpha')) $action='preview';
+if (GETPOST(PREVIEW, 'alpha')) $action=PREVIEW;
 if (GETPOST('createsite', 'alpha')) { $action='createsite'; }
 if (GETPOST('createcontainer', 'alpha')) { $action='createcontainer'; }
 if (GETPOST('editcss', 'alpha')) { $action='editcss'; }
@@ -97,7 +101,7 @@ $pagenext = $page + 1;
 //if (! $sortfield) $sortfield='name';
 //if (! $sortorder) $sortorder='ASC';
 
-if (empty($action)) $action = 'preview';
+if (empty($action)) $action = PREVIEW;
 
 $object = new Website($db);
 $objectpage = new WebsitePage($db);
@@ -168,7 +172,7 @@ if (empty($pageid) && empty($pageref) && $object->id > 0 && $action != 'createco
 	if (empty($pageid))
 	{
 		$array = $objectpage->fetchAll($object->id, 'ASC,ASC', 'type_container,pageurl');
-		if (!is_array($array) && $array < 0) dol_print_error('', $objectpage->error, $objectpage->errors);
+		if (!is_array($array) && $array < 0) dol_print_error('', $objectpage->error, $objectpage-CONSTERROR;
 		$atleastonepage = (is_array($array) && count($array) > 0);
 
 		$firstpageid = 0; $homepageid = 0;
@@ -269,18 +273,18 @@ $manifestjsoncontentdefault .= '{
 // Protections
 if (GETPOST('refreshsite') || GETPOST('refreshsite_x') || GETPOST('refreshsite.x') ||  GETPOST('refreshpage') || GETPOST('refreshpage_x') || GETPOST('refreshpage.x'))
 {
-    $action = 'preview';    // To avoid to make an action on another page or another site when we click on button to select another site or page.
+    $action = PREVIEW;    // To avoid to make an action on another page or another site when we click on button to select another site or page.
 }
 if (GETPOST('refreshsite', 'alpha') || GETPOST('refreshsite.x', 'alpha') || GETPOST('refreshsite_x', 'alpha'))		// If we change the site, we reset the pageid and cancel addsite action.
 {
-    if ($action == 'addsite') $action = 'preview';
-    if ($action == 'updatesource') $action = 'preview';
+    if ($action == 'addsite') $action = PREVIEW;
+    if ($action == 'updatesource') $action = PREVIEW;
 
     $pageid = $object->fk_default_home;
     if (empty($pageid))
     {
     	$array=$objectpage->fetchAll($object->id, 'ASC,ASC', 'type_container,pageurl');
-    	if (! is_array($array) && $array < 0) dol_print_error('', $objectpage->error, $objectpage->errors);
+    	if (! is_array($array) && $array < 0) dol_print_error('', $objectpage->error, $objectpage-CONSTERROR;
     	$atleastonepage=(is_array($array) && count($array) > 0);
 
     	$firstpageid=0; $homepageid=0;
@@ -292,12 +296,12 @@ if (GETPOST('refreshsite', 'alpha') || GETPOST('refreshsite.x', 'alpha') || GETP
     	$pageid=($homepageid?$homepageid:$firstpageid);   // We choose home page and if not defined yet, we take first page
     }
 }
-if (GETPOST('refreshpage', 'alpha') && ! in_array($action, array('updatecss'))) $action='preview';
+if (GETPOST('refreshpage', 'alpha') && ! in_array($action, array('updatecss'))) $action=PREVIEW;
 
 // Cancel
 if ($cancel)
 {
-	$action = 'preview';
+	$action = PREVIEW;
 	if ($backtopage)
 	{
 		header("Location: ".$backtopage);
@@ -362,7 +366,7 @@ if ($action == 'adddir' && $permtouploadfile)
 	}
 	else
 	{
-		setEventMessages('Error '.$langs->trans($ecmdir->error), null, 'errors');
+		setEventMessages('Error '.$langs->trans($ecmdir->error), null, CONSTERROR);
 		$action = "createcontainer";
 	}
 
@@ -378,20 +382,20 @@ if ($action == 'addsite')
 	if (GETPOST('virtualhost', 'alpha') && !preg_match('/^http/', GETPOST('virtualhost', 'alpha')))
     {
         $error++;
-        setEventMessages($langs->trans('ErrorURLMustStartWithHttp', $langs->transnoentitiesnoconv("VirtualHost")), null, 'errors');
+        setEventMessages($langs->trans('ErrorURLMustStartWithHttp', $langs->transnoentitiesnoconv("VirtualHost")), null, CONSTERROR);
 	}
 
 	if (!$error && !GETPOST('WEBSITE_REF', 'alpha'))
 	{
 		$error++;
-		$langs->load("errors");
-		setEventMessages($langs->transnoentities("ErrorFieldRequired", $langs->transnoentities("Ref")), null, 'errors');
+		$langs->load(CONSTERROR);
+		setEventMessages($langs->transnoentities("ErrorFieldRequired", $langs->transnoentities("Ref")), null, CONSTERROR);
 	}
 	if (!$error && !preg_match('/^[a-z0-9_\-\.]+$/i', GETPOST('WEBSITE_REF', 'alpha')))
 	{
 		$error++;
-		$langs->load("errors");
-		setEventMessages($langs->transnoentities("ErrorFieldCanNotContainSpecialCharacters", $langs->transnoentities("Ref")), null, 'errors');
+		$langs->load(CONSTERROR);
+		setEventMessages($langs->transnoentities("ErrorFieldCanNotContainSpecialCharacters", $langs->transnoentities("Ref")), null, CONSTERROR);
 	}
 
 	if (!$error)
@@ -405,7 +409,7 @@ if ($action == 'addsite')
 		if ($result <= 0)
 		{
 			$error++;
-			setEventMessages($tmpobject->error, $tmpobject->errors, 'errors');
+			setEventMessages($tmpobject->error, $tmpobject-CONSTERROR CONSTERROR);
 		}
 	}
 
@@ -426,7 +430,7 @@ if ($action == 'addsite')
 
 	if (!$error)
 	{
-		$action = 'preview';
+		$action = PREVIEW;
 		$id = $object->id;
 	}
 }
@@ -454,15 +458,15 @@ if ($action == 'addcontainer')
 		if (empty($urltograb))
 		{
 			$error++;
-			$langs->load("errors");
-			setEventMessages($langs->trans("ErrorFieldRequired", $langs->transnoentitiesnoconv("URL")), null, 'errors');
+			$langs->load(CONSTERROR);
+			setEventMessages($langs->trans("ErrorFieldRequired", $langs->transnoentitiesnoconv("URL")), null, CONSTERROR);
 			$action = 'createcontainer';
 		}
 		elseif (!preg_match('/^http/', $urltograb))
 		{
 			$error++;
-			$langs->load("errors");
-			setEventMessages('Error URL must start with http:// or https://', null, 'errors');
+			$langs->load(CONSTERROR);
+			setEventMessages('Error URL must start with http:// or https://', null, CONSTERROR);
 			$action = 'createcontainer';
 		}
 
@@ -492,7 +496,7 @@ if ($action == 'addcontainer')
 			$result = $tmpwebsitepage->fetch(0, $object->id, $pageurl);
 			if ($result > 0)
 			{
-				setEventMessages($langs->trans("AliasPageAlreadyExists", $pageurl), null, 'errors');
+				setEventMessages($langs->trans("AliasPageAlreadyExists", $pageurl), null, CONSTERROR);
 				$error++;
 				$action = 'createcontainer';
 			}
@@ -504,13 +508,13 @@ if ($action == 'addcontainer')
 			if ($tmp['curl_error_no'])
 			{
 				$error++;
-				setEventMessages('Error getting '.$urltograb.': '.$tmp['curl_error_msg'], null, 'errors');
+				setEventMessages('Error getting '.$urltograb.': '.$tmp['curl_error_msg'], null, CONSTERROR);
 				$action = 'createcontainer';
 			}
 			elseif ($tmp['http_code'] != '200')
 			{
 				$error++;
-				setEventMessages('Error getting '.$urltograb.': '.$tmp['http_code'], null, 'errors');
+				setEventMessages('Error getting '.$urltograb.': '.$tmp['http_code'], null, CONSTERROR);
 				$action = 'createcontainer';
 			}
 			else
@@ -627,14 +631,14 @@ if ($action == 'addcontainer')
 	    			if ($tmpgeturl['curl_error_no'])
 	    			{
 	    				$error++;
-	    				setEventMessages('Error getting script url '.$urltograbbis.': '.$tmpgeturl['curl_error_msg'], null, 'errors');
+	    				setEventMessages('Error getting script url '.$urltograbbis.': '.$tmpgeturl['curl_error_msg'], null, CONSTERROR);
 	    				$errorforsubresource++;
 	    				$action='createcontainer';
 	    			}
 					elseif ($tmpgeturl['http_code'] != '200')
 					{
 						$error++;
-						setEventMessages('Error getting script url '.$urltograbbis.': '.$tmpgeturl['http_code'], null, 'errors');
+						setEventMessages('Error getting script url '.$urltograbbis.': '.$tmpgeturl['http_code'], null, CONSTERROR);
 						$errorforsubresource++;
 						$action='createcontainer';
 					}
@@ -695,14 +699,14 @@ if ($action == 'addcontainer')
 					if ($tmpgeturl['curl_error_no'])
 					{
 						$errorforsubresource++;
-						setEventMessages('Error getting link tag url '.$urltograbbis.': '.$tmpgeturl['curl_error_msg'], null, 'errors');
+						setEventMessages('Error getting link tag url '.$urltograbbis.': '.$tmpgeturl['curl_error_msg'], null, CONSTERROR);
 						dol_syslog('Error getting '.$urltograbbis.': '.$tmpgeturl['curl_error_msg']);
 						$action = 'createcontainer';
 					}
 					elseif ($tmpgeturl['http_code'] != '200')
 					{
 						$errorforsubresource++;
-						setEventMessages('Error getting link tag url '.$urltograbbis.': '.$tmpgeturl['http_code'], null, 'errors');
+						setEventMessages('Error getting link tag url '.$urltograbbis.': '.$tmpgeturl['http_code'], null, CONSTERROR);
 						dol_syslog('Error getting '.$urltograbbis.': '.$tmpgeturl['curl_error_msg']);
 						$action = 'createcontainer';
 					}
@@ -803,22 +807,22 @@ if ($action == 'addcontainer')
 	{
 		if (empty($objectpage->pageurl))
 		{
-			$langs->load("errors");
-			setEventMessages($langs->trans("ErrorFieldRequired", $langs->transnoentitiesnoconv("WEBSITE_PAGENAME")), null, 'errors');
+			$langs->load(CONSTERROR);
+			setEventMessages($langs->trans("ErrorFieldRequired", $langs->transnoentitiesnoconv("WEBSITE_PAGENAME")), null, CONSTERROR);
 			$error++;
 			$action = 'createcontainer';
 		}
 		elseif (!preg_match('/^[a-z0-9\-\_]+$/i', $objectpage->pageurl))
 		{
-			$langs->load("errors");
-			setEventMessages($langs->transnoentities("ErrorFieldCanNotContainSpecialCharacters", $langs->transnoentities('WEBSITE_PAGENAME')), null, 'errors');
+			$langs->load(CONSTERROR);
+			setEventMessages($langs->transnoentities("ErrorFieldCanNotContainSpecialCharacters", $langs->transnoentities('WEBSITE_PAGENAME')), null, CONSTERROR);
 			$error++;
 			$action = 'createcontainer';
 		}
 		if (empty($objectpage->title))
 		{
-			$langs->load("errors");
-			setEventMessages($langs->trans("ErrorFieldRequired", $langs->transnoentitiesnoconv("WEBSITE_TITLE")), null, 'errors');
+			$langs->load(CONSTERROR);
+			setEventMessages($langs->trans("ErrorFieldRequired", $langs->transnoentitiesnoconv("WEBSITE_TITLE")), null, CONSTERROR);
 			$error++;
 			$action = 'createcontainer';
 		}
@@ -829,7 +833,7 @@ if ($action == 'addcontainer')
 		$pageid = $objectpage->create($user);
 		if ($pageid <= 0) {
 			$error++;
-			setEventMessages($objectpage->error, $objectpage->errors, 'errors');
+			setEventMessages($objectpage->error, $objectpage-CONSTERROR CONSTERROR);
 			$action = 'createcontainer';
 		}
 		else {
@@ -840,14 +844,14 @@ if ($action == 'addcontainer')
 				if ($res <= 0)
 				{
 					$error++;
-					setEventMessages($object->error, $object->errors, 'errors');
+					setEventMessages($object->error, $object-CONSTERROR CONSTERROR);
 				} else {
 					$filetpl = $pathofwebsite.'/page'.$pageid.'.tpl.php';
 
 					// Generate the index.php page to be the home page
 					$result = dolSaveIndexPage($pathofwebsite, $fileindex, $filetpl, $filewrapper);
 
-					if ($result <= 0) setEventMessages('Failed to write file '.$fileindex, null, 'errors');
+					if ($result <= 0) setEventMessages('Failed to write file '.$fileindex, null, CONSTERROR);
 				}
 			}
 		}
@@ -864,7 +868,7 @@ if ($action == 'addcontainer')
 			$result = dolSavePageAlias($filealias, $object, $objectpage);
 			if (!$result)
 			{
-				setEventMessages('Failed to write file '.$filealias, null, 'errors');
+				setEventMessages('Failed to write file '.$filealias, null, CONSTERROR);
 			}
 
 			// Save page of content
@@ -875,7 +879,7 @@ if ($action == 'addcontainer')
 			}
 			else
 			{
-				setEventMessages('Failed to write file '.$filetpl, null, 'errors');
+				setEventMessages('Failed to write file '.$filetpl, null, CONSTERROR);
 				$action = 'createcontainer';
 			}
 		}
@@ -951,7 +955,7 @@ if ($action == 'addcontainer')
 			$result = dolSaveReadme($filereadme, $readmecontent);
 		}
 
-		$action = 'preview';
+		$action = PREVIEW;
 	}
 }
 
@@ -971,7 +975,7 @@ if ($action == 'confirm_deletesite' && $confirm == 'yes')
 		if ($res <= 0)
 		{
 			$error++;
-			setEventMessages($object->error, $object->errors, 'errors');
+			setEventMessages($object->error, $object-CONSTERROR CONSTERROR);
 		}
 	}
 	if (!$error)
@@ -1023,7 +1027,7 @@ if ($action == 'delete')
 		if ($res <= 0)
 		{
 			$error++;
-			setEventMessages($objectpage->error, $objectpage->errors, 'errors');
+			setEventMessages($objectpage->error, $objectpage-CONSTERROR CONSTERROR);
 		}
 	}
 
@@ -1060,7 +1064,7 @@ if ($action == 'updatecss')
 		    if (GETPOST('virtualhost', 'alpha') && !preg_match('/^http/', GETPOST('virtualhost', 'alpha')))
     		{
     		    $error++;
-    		    setEventMessages($langs->trans('ErrorURLMustStartWithHttp', $langs->transnoentitiesnoconv("VirtualHost")), null, 'errors');
+    		    setEventMessages($langs->trans('ErrorURLMustStartWithHttp', $langs->transnoentitiesnoconv("VirtualHost")), null, CONSTERROR);
     		    $action = 'editcss';
     		}
 
@@ -1073,7 +1077,7 @@ if ($action == 'updatecss')
         		if ($result < 0)
         		{
         		    $error++;
-        		    setEventMessages($object->error, $object->errors, 'errors');
+        		    setEventMessages($object->error, $object-CONSTERROR CONSTERROR);
         		    $action = 'editcss';
         		}
     		}
@@ -1093,7 +1097,7 @@ if ($action == 'updatecss')
     		if (!$result)
     		{
     			$error++;
-    			setEventMessages('Failed to write file '.$filemaster, null, 'errors');
+    			setEventMessages('Failed to write file '.$filemaster, null, CONSTERROR);
     		}
 
 
@@ -1122,7 +1126,7 @@ if ($action == 'updatecss')
     		if (!$result)
     		{
     			$error++;
-    			setEventMessages('Failed to write file '.$filehtmlheader, null, 'errors');
+    			setEventMessages('Failed to write file '.$filehtmlheader, null, CONSTERROR);
     		}
 
 
@@ -1153,7 +1157,7 @@ if ($action == 'updatecss')
     		if (!$result)
     		{
     			$error++;
-    			setEventMessages('Failed to write file '.$filecss, null, 'errors');
+    			setEventMessages('Failed to write file '.$filecss, null, CONSTERROR);
     		}
 
 
@@ -1180,7 +1184,7 @@ if ($action == 'updatecss')
     		if (!$result)
     		{
     			$error++;
-    			setEventMessages('Failed to write file '.$filejs, null, 'errors');
+    			setEventMessages('Failed to write file '.$filejs, null, CONSTERROR);
     		}
 
 
@@ -1207,7 +1211,7 @@ if ($action == 'updatecss')
     		if (!$result)
     		{
     			$error++;
-    			setEventMessages('Failed to write file '.$filerobot, null, 'errors');
+    			setEventMessages('Failed to write file '.$filerobot, null, CONSTERROR);
     		}
 
 
@@ -1219,7 +1223,7 @@ if ($action == 'updatecss')
     		if (!$result)
     		{
     			$error++;
-    			setEventMessages('Failed to write file '.$filehtaccess, null, 'errors');
+    			setEventMessages('Failed to write file '.$filehtaccess, null, CONSTERROR);
     		}
 
 
@@ -1246,7 +1250,7 @@ if ($action == 'updatecss')
        		if (!$result)
        		{
        			$error++;
-       			setEventMessages('Failed to write file '.$filemanifestjson, null, 'errors');
+       			setEventMessages('Failed to write file '.$filemanifestjson, null, CONSTERROR);
        		}
 
 
@@ -1273,7 +1277,7 @@ if ($action == 'updatecss')
        		if (!$result)
        		{
        			$error++;
-       			setEventMessages('Failed to write file '.$filereadme, null, 'errors');
+       			setEventMessages('Failed to write file '.$filereadme, null, CONSTERROR);
        		}
 
 
@@ -1285,7 +1289,7 @@ if ($action == 'updatecss')
 
     		if (!GETPOSTISSET('updateandstay'))	// If we click on "Save And Stay", we don not make the redirect
     		{
-    			$action = 'preview';
+    			$action = PREVIEW;
     			if ($backtopage)
 	    		{
 	    			header("Location: ".$backtopage);
@@ -1312,7 +1316,7 @@ if ($action == 'setashome')
 	if (!$res > 0)
 	{
 		$error++;
-		setEventMessages($object->error, $object->errors, 'errors');
+		setEventMessages($object->error, $object-CONSTERROR CONSTERROR);
 	}
 
 	if (!$error)
@@ -1325,9 +1329,9 @@ if ($action == 'setashome')
 		$result = dolSaveIndexPage($pathofwebsite, $fileindex, $filetpl, $filewrapper);
 
 		if ($result) setEventMessages($langs->trans("Saved"), null, 'mesgs');
-		else setEventMessages('Failed to write file '.$fileindex, null, 'errors');
+		else setEventMessages('Failed to write file '.$fileindex, null, CONSTERROR);
 
-		$action = 'preview';
+		$action = PREVIEW;
 	}
 	else
 	{
@@ -1349,8 +1353,8 @@ if ($action == 'updatemeta')
 	if (!preg_match('/^[a-z0-9\-\_]+$/i', GETPOST('WEBSITE_PAGENAME', 'alpha')))
 	{
 		$error++;
-		$langs->load("errors");
-		setEventMessages($langs->transnoentities("ErrorFieldCanNotContainSpecialCharacters", $langs->transnoentities('WEBSITE_PAGENAME')), null, 'errors');
+		$langs->load(CONSTERROR);
+		setEventMessages($langs->transnoentities("ErrorFieldCanNotContainSpecialCharacters", $langs->transnoentities('WEBSITE_PAGENAME')), null, CONSTERROR);
 		$action = 'editmeta';
 	}
 
@@ -1358,7 +1362,7 @@ if ($action == 'updatemeta')
 	if ($res <= 0)
 	{
 		$error++;
-		setEventMessages('Page not found '.$objectpage->error, $objectpage->errors, 'errors');
+		setEventMessages('Page not found '.$objectpage->error, $objectpage-CONSTERROR CONSTERROR);
 	}
 
 	// Check alias not exists
@@ -1369,15 +1373,15 @@ if ($action == 'updatemeta')
 		if ($result < 0)
 		{
 			$error++;
-			$langs->load("errors");
-			setEventMessages($websitepagetemp->error, $websitepagetemp->errors, 'errors');
+			$langs->load(CONSTERROR);
+			setEventMessages($websitepagetemp->error, $websitepagetemp-CONSTERROR CONSTERROR);
 			$action = 'editmeta';
 		}
 		if ($result > 0)
 		{
 			$error++;
-			$langs->load("errors");
-			setEventMessages($langs->trans("ErrorAPageWithThisNameOrAliasAlreadyExists", $websitepagetemp->pageurl), null, 'errors');
+			$langs->load(CONSTERROR);
+			setEventMessages($langs->trans("ErrorAPageWithThisNameOrAliasAlreadyExists", $websitepagetemp->pageurl), null, CONSTERROR);
 			$action = 'editmeta';
 		}
 	}
@@ -1391,16 +1395,16 @@ if ($action == 'updatemeta')
 			if ($result < 0)
 			{
 				$error++;
-				$langs->load("errors");
-				setEventMessages($websitepagetemp->error, $websitepagetemp->errors, 'errors');
+				$langs->load(CONSTERROR);
+				setEventMessages($websitepagetemp->error, $websitepagetemp-CONSTERROR CONSTERROR);
 				$action = 'editmeta';
 				break;
 			}
 			if ($result > 0)
 			{
 				$error++;
-				$langs->load("errors");
-				setEventMessages($langs->trans("ErrorAPageWithThisNameOrAliasAlreadyExists", $websitepagetemp->pageurl), null, 'errors');
+				$langs->load(CONSTERROR);
+				setEventMessages($langs->trans("ErrorAPageWithThisNameOrAliasAlreadyExists", $websitepagetemp->pageurl), null, CONSTERROR);
 				$action = 'editmeta';
 				break;
 			}
@@ -1428,19 +1432,19 @@ if ($action == 'updatemeta')
 		$res = $objectpage->update($user);
 		if (!($res > 0))
 		{
-			$langs->load("errors");
+			$langs->load(CONSTERROR);
 			if ($db->lasterrno == 'DB_ERROR_RECORD_ALREADY_EXISTS')
 			{
 				$error++;
-				$langs->load("errors");
-				setEventMessages($langs->trans("ErrorAPageWithThisNameOrAliasAlreadyExists"), null, 'errors');
+				$langs->load(CONSTERROR);
+				setEventMessages($langs->trans("ErrorAPageWithThisNameOrAliasAlreadyExists"), null, CONSTERROR);
 				$action = 'editmeta';
 			}
 			else
 			{
 				$error++;
-				$langs->load("errors");
-				setEventMessages($objectpage->error, $objectpage->errors, 'errors');
+				$langs->load(CONSTERROR);
+				setEventMessages($objectpage->error, $objectpage-CONSTERROR CONSTERROR);
 				$action = 'editmeta';
 			}
 		}
@@ -1466,7 +1470,7 @@ if ($action == 'updatemeta')
 
 		// Now generate the master.inc.php page
 		$result = dolSaveMasterFile($filemaster);
-		if (!$result) setEventMessages('Failed to write file '.$filemaster, null, 'errors');
+		if (!$result) setEventMessages('Failed to write file '.$filemaster, null, CONSTERROR);
 
 		// Now delete the alias.php page
 		if (!empty($fileoldalias))
@@ -1490,7 +1494,7 @@ if ($action == 'updatemeta')
 
 		// Save page alias
 		$result = dolSavePageAlias($filealias, $object, $objectpage);
-		if (!$result) setEventMessages('Failed to write file '.$filealias, null, 'errors');
+		if (!$result) setEventMessages('Failed to write file '.$filealias, null, CONSTERROR);
 		// Save alt aliases
 		if (!empty($objectpage->aliasalt))
 		{
@@ -1502,7 +1506,7 @@ if ($action == 'updatemeta')
 					if (trim($tmpaliasalt))
 					{
 						$result = dolSavePageAlias($pathofwebsite.'/'.trim($tmpaliasalt).'.php', $object, $objectpage);
-						if (!$result) setEventMessages('Failed to write file '.$pathofwebsite.'/'.trim($tmpaliasalt).'.php', null, 'errors');
+						if (!$result) setEventMessages('Failed to write file '.$pathofwebsite.'/'.trim($tmpaliasalt).'.php', null, CONSTERROR);
 					}
 				}
 			}
@@ -1519,7 +1523,7 @@ if ($action == 'updatemeta')
 			{
 				//header("Location: ".$_SERVER["PHP_SELF"].'?website='.$websitekey.'&pageid='.$pageid);
 				//exit;
-				$action = 'preview';
+				$action = PREVIEW;
 			}
 			else
 			{
@@ -1528,17 +1532,17 @@ if ($action == 'updatemeta')
 		}
 		else
 		{
-			setEventMessages('Failed to write file '.$filetpl, null, 'errors');
+			setEventMessages('Failed to write file '.$filetpl, null, CONSTERROR);
 			//header("Location: ".$_SERVER["PHP_SELF"].'?website='.$websitekey.'&pageid='.$pageid);
    			//exit;
-			$action = 'preview';
+			$action = PREVIEW;
 		}
 	}
 }
 
 // Update page
 if (($action == 'updatesource' || $action == 'updatecontent' || $action == 'confirm_createfromclone' || $action == 'confirm_createpagefromclone')
-	|| ($action == 'preview' && (GETPOST('refreshsite') || GETPOST('refreshpage') || GETPOST('preview'))))
+	|| ($action == PREVIEW && (GETPOST('refreshsite') || GETPOST('refreshpage') || GETPOST(PREVIEW))))
 {
 	$object->fetch(0, $websitekey);
 	$website = $object;
@@ -1552,8 +1556,8 @@ if (($action == 'updatesource' || $action == 'updatecontent' || $action == 'conf
 		if ($result < 0)
 		{
 			$error++;
-			setEventMessages($objectnew->error, $objectnew->errors, 'errors');
-			$action = 'preview';
+			setEventMessages($objectnew->error, $objectnew-CONSTERROR CONSTERROR);
+			$action = PREVIEW;
 
 			$db->rollback();
 		}
@@ -1577,13 +1581,13 @@ if (($action == 'updatesource' || $action == 'updatecontent' || $action == 'conf
 			if (GETPOST('newlang', 'aZ09') == $objectpage->lang)
 			{
 				$error++;
-				setEventMessages($langs->trans("LanguageMustNotBeSameThanClonedPage"), null, 'errors');
-				$action = 'preview';
+				setEventMessages($langs->trans("LanguageMustNotBeSameThanClonedPage"), null, CONSTERROR);
+				$action = PREVIEW;
 			}
 			if (GETPOST('newwebsite', 'int') != $object->id) {
 				$error++;
-				setEventMessages($langs->trans("WebsiteMustBeSameThanClonedPageIfTranslation"), null, 'errors');
-				$action = 'preview';
+				setEventMessages($langs->trans("WebsiteMustBeSameThanClonedPageIfTranslation"), null, CONSTERROR);
+				$action = PREVIEW;
 			}
 		}
 
@@ -1610,7 +1614,7 @@ if (($action == 'updatesource' || $action == 'updatecontent' || $action == 'conf
 			if ($resultpage < 0)
 			{
 				$error++;
-				setEventMessages($objectpage->error, $objectpage->errors, 'errors');
+				setEventMessages($objectpage->error, $objectpage-CONSTERROR CONSTERROR);
 				$action = 'createpagefromclone';
 
 				$db->rollback();
@@ -1701,7 +1705,7 @@ if (($action == 'updatesource' || $action == 'updatecontent' || $action == 'conf
                 if (preg_match('/'.$forbiddenphpcommand.'\s*\(/ms', $phpfullcodestring))
                 {
                     $error++;
-                    setEventMessages($langs->trans("DynamicPHPCodeContainsAForbiddenInstruction", $forbiddenphpcommand), null, 'errors');
+                    setEventMessages($langs->trans("DynamicPHPCodeContainsAForbiddenInstruction", $forbiddenphpcommand), null, CONSTERROR);
                     if ($action == 'updatesource') $action = 'editsource';
                     if ($action == 'updatecontent') $action = 'editcontent';
                 }
@@ -1712,7 +1716,7 @@ if (($action == 'updatesource' || $action == 'updatecontent' || $action == 'conf
                 if ($phpfullcodestringold != $phpfullcodestring)
                 {
                     $error++;
-                    setEventMessages($langs->trans("NotAllowedToAddDynamicContent"), null, 'errors');
+                    setEventMessages($langs->trans("NotAllowedToAddDynamicContent"), null, CONSTERROR);
                     if ($action == 'updatesource') $action = 'editsource';
                     if ($action == 'updatecontent') $action = 'editcontent';
                 }
@@ -1727,7 +1731,7 @@ if (($action == 'updatesource' || $action == 'updatecontent' || $action == 'conf
 			if ($res < 0)
 			{
 				$error++;
-				setEventMessages($objectpage->error, $objectpage->errors, 'errors');
+				setEventMessages($objectpage->error, $objectpage-CONSTERROR CONSTERROR);
 				if ($action == 'updatesource') $action = 'editsource';
 				if ($action == 'updatecontent') $action = 'editcontent';
 			}
@@ -1746,7 +1750,7 @@ if (($action == 'updatesource' || $action == 'updatecontent' || $action == 'conf
 				// Now generate the master.inc.php page
 				$result = dolSaveMasterFile($filemaster);
 
-				if (!$result) setEventMessages('Failed to write file '.$filemaster, null, 'errors');
+				if (!$result) setEventMessages('Failed to write file '.$filemaster, null, CONSTERROR);
 
 
 				// Now generate the alias.php page
@@ -1758,7 +1762,7 @@ if (($action == 'updatesource' || $action == 'updatecontent' || $action == 'conf
 
 				// Save page alias
 				$result = dolSavePageAlias($filealias, $object, $objectpage);
-				if (!$result) setEventMessages('Failed to write file '.$filealias, null, 'errors');
+				if (!$result) setEventMessages('Failed to write file '.$filealias, null, CONSTERROR);
 
 				// Save page content
 				$result = dolSavePageContent($filetpl, $object, $objectpage);
@@ -1784,7 +1788,7 @@ if (($action == 'updatesource' || $action == 'updatecontent' || $action == 'conf
 				}
 				else
 				{
-					setEventMessages('Failed to write file '.$filetpl, null, 'errors');
+					setEventMessages('Failed to write file '.$filetpl, null, CONSTERROR);
 					header("Location: ".$_SERVER["PHP_SELF"].'?website='.$websitekey.'&pageid='.$pageid);
 	   				exit;
 				}
@@ -1835,7 +1839,7 @@ if ($action == 'exportsite')
 	}
 	else
 	{
-		setEventMessages($object->error, $object->errors, 'errors');
+		setEventMessages($object->error, $object-CONSTERROR CONSTERROR);
 		$action = '';
 	}
 }
@@ -1845,7 +1849,7 @@ if ($action == 'importsiteconfirm')
 {
 	if (empty($_FILES) && !GETPOSTISSET('templateuserfile'))
 	{
-		setEventMessages($langs->trans("ErrorFieldRequired", $langs->transnoentitiesnoconv("File")), null, 'errors');
+		setEventMessages($langs->trans("ErrorFieldRequired", $langs->transnoentitiesnoconv("File")), null, CONSTERROR);
 		$action = 'importsite';
 	}
 	else
@@ -1862,7 +1866,7 @@ if ($action == 'importsiteconfirm')
 				$result = symlink($pathtomedias, $pathtomediasinwebsite);
 				if (!$result)
 				{
-					setEventMessages($langs->trans("ErrorFieldToCreateSymLinkToMedias", $pathtomediasinwebsite, $pathtomedias), null, 'errors');
+					setEventMessages($langs->trans("ErrorFieldToCreateSymLinkToMedias", $pathtomediasinwebsite, $pathtomedias), null, CONSTERROR);
 					$action = 'importsite';
 				}
 			}
@@ -1883,11 +1887,11 @@ if ($action == 'importsiteconfirm')
 					{
 						$error++;
 						if ($_FILES['userfile']['error'][$key] == 1 || $_FILES['userfile']['error'][$key] == 2) {
-							setEventMessages($langs->trans('ErrorFileSizeTooLarge'), null, 'errors');
+							setEventMessages($langs->trans('ErrorFileSizeTooLarge'), null, CONSTERROR);
 							$action = 'importsite';
 						}
 						else {
-							setEventMessages($langs->trans("ErrorFieldRequired", $langs->transnoentitiesnoconv("File")), null, 'errors');
+							setEventMessages($langs->trans("ErrorFieldRequired", $langs->transnoentitiesnoconv("File")), null, CONSTERROR);
 							$action = 'importsite';
 						}
 					}
@@ -1915,7 +1919,7 @@ if ($action == 'importsiteconfirm')
 				$result = $object->importWebSite($fileofzip);
 				if ($result < 0)
 				{
-					setEventMessages($object->error, $object->errors, 'errors');
+					setEventMessages($object->error, $object-CONSTERROR CONSTERROR);
 					$action = 'importsite';
 				}
 				else
@@ -2029,7 +2033,7 @@ print '<div>';
 
 // Add a margin under toolbar ?
 $style = '';
-if ($action != 'preview' && $action != 'editcontent' && $action != 'editsource') $style = ' margin-bottom: 5px;';
+if ($action != PREVIEW && $action != 'editcontent' && $action != 'editsource') $style = ' margin-bottom: 5px;';
 
 
 if (!GETPOST('hide_websitemenu'))
@@ -2044,7 +2048,7 @@ if (!GETPOST('hide_websitemenu'))
 	// ***** Part for web sites
 	print '<!-- Bar for website -->';
 	print '<span class="websiteselection hideonsmartphoneimp minwidth100 tdoverflowmax100">';
-	print $langs->trans("Website").' : ';
+	print $langs->trans(WEBSITE).' : ';
 	print '</span>';
 
 	print '<span class="websiteselection hideonsmartphoneimp">';
@@ -2055,7 +2059,7 @@ if (!GETPOST('hide_websitemenu'))
 	// List of website
 	print '<span class="websiteselection">';
 	$out = '';
-	$out .= '<select name="website" class="minwidth100 maxwidth300" id="website">';
+	$out .= '<select name=WEBSITE class="minwidth100 maxwidth300" id=WEBSITE>';
 	if (empty($object->records)) $out .= '<option value="-1">&nbsp;</option>';
 	// Loop on each sites
 	$i = 0;
@@ -2090,10 +2094,10 @@ if (!GETPOST('hide_websitemenu'))
 		$array=$objectpage->fetchAll($object->id, 'ASC,ASC', 'type_container,pageurl');
 		$object->lines = $array;
 	}
-	if (! is_array($array) && $array < 0) dol_print_error('', $objectpage->error, $objectpage->errors);
+	if (! is_array($array) && $array < 0) dol_print_error('', $objectpage->error, $objectpage-CONSTERROR;
 	$atleastonepage=(is_array($array) && count($array) > 0);
 
-	if ($websitekey && $websitekey != '-1' && ($action == 'preview' || $action == 'createfromclone' || $action == 'createpagefromclone' || $action == 'deletesite'))
+	if ($websitekey && $websitekey != '-1' && ($action == PREVIEW || $action == 'createfromclone' || $action == 'createpagefromclone' || $action == 'deletesite'))
 	{
 		print ' &nbsp; ';
 
@@ -2146,7 +2150,7 @@ if (!GETPOST('hide_websitemenu'))
 
 	print '<span class="websitetools websiteselection">';
 
-	if ($action == 'preview' || $action == 'createfromclone' || $action == 'createpagefromclone' || $action == 'deletesite')
+	if ($action == PREVIEW || $action == 'createfromclone' || $action == 'createpagefromclone' || $action == 'deletesite')
 	{
 		$urlext = $virtualurl;
 		$urlint = $urlwithroot.'/public/website/index.php?website='.$websitekey;
@@ -2194,7 +2198,7 @@ if (!GETPOST('hide_websitemenu'))
 		if ($action == 'editcss') print '<input type="submit" id="savefilean stay" class="button buttonforacesave" value="'.dol_escape_htmltag($langs->trans("SaveAndStay")).'" name="updateandstay">';
 		if (preg_match('/^create/', $action) && $action != 'file_manager' && $action != 'replacesite' && $action != 'replacesiteconfirm') print '<input type="submit" id="savefile" class="button buttonforacesave" value="'.dol_escape_htmltag($langs->trans("Save")).'" name="update">';
 		if (preg_match('/^edit/', $action) && $action != 'file_manager' && $action != 'replacesite' && $action != 'replacesiteconfirm') print '<input type="submit" id="savefile" class="button buttonforacesave" value="'.dol_escape_htmltag($langs->trans("Save")).'" name="update">';
-		if ($action != 'preview') print '<input type="submit" class="button" value="'.dol_escape_htmltag($langs->trans("Cancel")).'" name="cancel">';
+		if ($action != PREVIEW) print '<input type="submit" class="button" value="'.dol_escape_htmltag($langs->trans("Cancel")).'" name="cancel">';
 	}
 
 	print '</span>';
@@ -2268,12 +2272,12 @@ if (!GETPOST('hide_websitemenu'))
 		else print '<span class="valignmiddle opacitymedium">'.img_next($langs->trans("NextContainer")).'</span>';
 
 		$websitepage = new WebSitePage($db);
-		if ($pageid > 0 && ($action == 'preview' || $action == 'createfromclone' || $action == 'createpagefromclone'))
+		if ($pageid > 0 && ($action == PREVIEW || $action == 'createfromclone' || $action == 'createpagefromclone'))
 		{
 			$websitepage->fetch($pageid);
 		}
 
-		if ($action == 'preview' || $action == 'createfromclone' || $action == 'createpagefromclone' || $action == 'deletesite')
+		if ($action == PREVIEW || $action == 'createfromclone' || $action == 'createpagefromclone' || $action == 'deletesite')
 		{
 			$disabled = '';
 			if (empty($user->rights->website->write)) $disabled = ' disabled="disabled"';
@@ -2285,7 +2289,7 @@ if (!GETPOST('hide_websitemenu'))
 					array('type' => 'checkbox', 'name' => 'delete_also_js', 'label' => $langs->trans("DeleteAlsoJs"), 'value' => 0),
 					array('type' => 'checkbox', 'name' => 'delete_also_medias', 'label' => $langs->trans("DeleteAlsoMedias"), 'value' => 0),
 					//array('type' => 'other','name' => 'newlang','label' => $langs->trans("Language"), 'value' => $formadmin->select_language(GETPOST('newlang', 'aZ09')?GETPOST('newlang', 'aZ09'):$langs->defaultlang, 'newlang', 0, null, '', 0, 0, 'minwidth200')),
-					//array('type' => 'other','name' => 'newwebsite','label' => $langs->trans("WebSite"), 'value' => $formwebsite->selectWebsite($object->id, 'newwebsite', 0))
+					//array('type' => 'other','name' => 'newwebsite','label' => $langs->trans(WEBSITE), 'value' => $formwebsite->selectWebsite($object->id, 'newwebsite', 0))
 				);
 
 				$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"].'?id='.$object->id, $langs->trans('DeleteWebsite'), '', 'confirm_deletesite', $formquestion, 0, 1, 200);
@@ -2297,7 +2301,7 @@ if (!GETPOST('hide_websitemenu'))
 			if ($action == 'createfromclone') {
 				// Create an array for form
 				$formquestion = array(
-					array('type' => 'text', 'name' => 'siteref', 'label'=> $langs->trans("WebSite"), 'value'=> 'copy_of_'.$object->ref)
+					array('type' => 'text', 'name' => 'siteref', 'label'=> $langs->trans(WEBSITE), 'value'=> 'copy_of_'.$object->ref)
 				);
 
 				$formconfirm = $form->formconfirm($_SERVER["PHP_SELF"].'?id='.$object->id, $langs->trans('CloneSite'), '', 'confirm_createfromclone', $formquestion, 0, 1, 200);
@@ -2315,7 +2319,7 @@ if (!GETPOST('hide_websitemenu'))
 						array('type' => 'hidden', 'name' => 'sourcepageurl', 'value'=> $objectpage->pageurl),
 						array('type' => 'checkbox', 'tdclass'=>'maxwidth200', 'name' => 'is_a_translation', 'label' => $langs->trans("PageIsANewTranslation"), 'value' => 0),
 						array('type' => 'other', 'name' => 'newlang', 'label' => $langs->trans("Language"), 'value' => $formadmin->select_language($preselectedlanguage, 'newlang', 0, null, 1, 0, 0, 'minwidth200', 0, 1)),
-						array('type' => 'other', 'name' => 'newwebsite', 'label' => $langs->trans("WebSite"), 'value' => $formwebsite->selectWebsite($object->id, 'newwebsite', 0)),
+						array('type' => 'other', 'name' => 'newwebsite', 'label' => $langs->trans(WEBSITE), 'value' => $formwebsite->selectWebsite($object->id, 'newwebsite', 0)),
 						array('type' => 'text', 'tdclass'=>'maxwidth200 fieldrequired', 'name' => 'newtitle', 'label'=> $langs->trans("WEBSITE_TITLE"), 'value'=> $langs->trans("CopyOf").' '.$objectpage->title),
 						array('type' => 'text', 'tdclass'=>'maxwidth200', 'name' => 'newpageurl', 'label'=> $langs->trans("WEBSITE_PAGENAME"), 'value'=> ''),
 					);
@@ -2445,7 +2449,7 @@ if (!GETPOST('hide_websitemenu'))
 
 		print '<span class="websitetools">';
 
-		if (($pageid > 0 && $atleastonepage) && ($action == 'preview' || $action == 'createfromclone' || $action == 'createpagefromclone' || $action == 'deletesite'))
+		if (($pageid > 0 && $atleastonepage) && ($action == PREVIEW || $action == 'createfromclone' || $action == 'createpagefromclone' || $action == 'deletesite'))
 		{
 			$realpage = $urlwithroot.'/public/website/index.php?website='.$websitekey.'&pageref='.$websitepage->pageurl;
 			$pagealias = $websitepage->pageurl;
@@ -2455,7 +2459,7 @@ if (!GETPOST('hide_websitemenu'))
 			$htmltext .= '<br>'.$langs->trans("CheckVirtualHostPerms", $langs->transnoentitiesnoconv("WritePerm"), DOL_DATA_ROOT.'/website<br>'.DOL_DATA_ROOT.'/medias');
 
 			print '<a class="websitebuttonsitepreview" id="previewpage" href="'.$realpage.'&nocache='.dol_now().'" class="button" target="tab'.$websitekey.'" alt="'.dol_escape_htmltag($htmltext).'">';
-			print $form->textwithpicto('', $htmltext, 1, 'preview');
+			print $form->textwithpicto('', $htmltext, 1, PREVIEW);
 			print '</a>'; // View page in new Tab
 
 			print '<div class="websiteinputurl" id="websiteinputpage">';
@@ -2481,7 +2485,7 @@ if (!GETPOST('hide_websitemenu'))
 			if ($action == 'editsource' || $action == 'editmeta') print '<input type="submit" id="savefilean stay" class="button buttonforacesave" value="'.dol_escape_htmltag($langs->trans("SaveAndStay")).'" name="updateandstay">';
 			if (preg_match('/^create/', $action)) print '<input type="submit" id="savefile" class="button buttonforacesave" value="'.dol_escape_htmltag($langs->trans("Save")).'" name="update">';
 			if (preg_match('/^edit/', $action)) print '<input type="submit" id="savefile" class="button buttonforacesave" value="'.dol_escape_htmltag($langs->trans("Save")).'" name="update">';
-			if ($action != 'preview') print '<input type="submit" class="button" value="'.dol_escape_htmltag($langs->trans("Cancel")).'" name="cancel">';
+			if ($action != PREVIEW) print '<input type="submit" class="button" value="'.dol_escape_htmltag($langs->trans("Cancel")).'" name="cancel">';
 		}
 
 		print '</span>'; // end websitetools
@@ -2506,7 +2510,7 @@ if (!GETPOST('hide_websitemenu'))
 
 
 
-		if ($action == 'preview' || $action == 'createfromclone' || $action == 'createpagefromclone')
+		if ($action == PREVIEW || $action == 'createfromclone' || $action == 'createpagefromclone')
 		{
 			// Adding jquery code to change on the fly url of preview ext
 			if (!empty($conf->use_javascript_ajax))
@@ -3306,7 +3310,7 @@ if ($action == 'replacesite' || $action == 'replacesiteconfirm')
 	print '<form action="'.$_SERVER["PHP_SELF"].'" method="POST">';
 	print '<input type="hidden" name="token" value="'.newToken().'">';
 	print '<input type="hidden" name="action" value="replacesiteconfirm">';
-	print '<input type="hidden" name="website" value="'.$website->ref.'">';
+	print '<input type="hidden" name=WEBSITE value="'.$website->ref.'">';
 
 
 	print '<!-- Replace string -->'."\n";
@@ -3454,7 +3458,7 @@ if ($action == 'replacesite' || $action == 'replacesiteconfirm')
 	print '</form>';
 }
 
-if ($action == 'preview' || $action == 'createfromclone' || $action == 'createpagefromclone')
+if ($action == PREVIEW || $action == 'createfromclone' || $action == 'createpagefromclone')
 {
 	if ($pageid > 0 && $atleastonepage)
 	{
