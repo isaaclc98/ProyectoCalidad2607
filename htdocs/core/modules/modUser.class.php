@@ -80,7 +80,8 @@ class modUser extends DolibarrModules
 		    0=>array('file'=>'box_lastlogin.php','enabledbydefaulton'=>'Home'),
             1=>array('file'=>'box_birthdays.php','enabledbydefaulton'=>'Home')
 		);
-
+		$perm = 'readperms';
+		$group ='group_advance':
 		// Permissions
 		$this->rights = array();
 		$this->rights_class = 'user';
@@ -101,7 +102,7 @@ class modUser extends DolibarrModules
 		$this->rights[$r][2] = 'r';
 		$this->rights[$r][3] = 0;
 		$this->rights[$r][4] = 'user_advance';
-		$this->rights[$r][5] = 'readperms';
+		$this->rights[$r][5] = $perm;
 
 		$r++;
 		$this->rights[$r][0] = 253;
@@ -141,7 +142,7 @@ class modUser extends DolibarrModules
 		$this->rights[$r][2] = 'r';
 		$this->rights[$r][3] = 0;
 		$this->rights[$r][4] = 'self_advance';        // Visible if option MAIN_USE_ADVANCED_PERMS is on
-		$this->rights[$r][5] = 'readperms';
+		$this->rights[$r][5] = $perm;
 
 		$r++;
 		$this->rights[$r][0] = 342;
@@ -172,7 +173,7 @@ class modUser extends DolibarrModules
 		$this->rights[$r][1] = 'Consulter les groupes';
 		$this->rights[$r][2] = 'r';
 		$this->rights[$r][3] = 0;
-		$this->rights[$r][4] = 'group_advance';        // Visible if option MAIN_USE_ADVANCED_PERMS is on
+		$this->rights[$r][4] = $group;        // Visible if option MAIN_USE_ADVANCED_PERMS is on
 		$this->rights[$r][5] = 'read';
 
 		$r++;
@@ -180,15 +181,15 @@ class modUser extends DolibarrModules
 		$this->rights[$r][1] = 'Consulter les permissions des groupes';
 		$this->rights[$r][2] = 'r';
 		$this->rights[$r][3] = 0;
-		$this->rights[$r][4] = 'group_advance';       // Visible if option MAIN_USE_ADVANCED_PERMS is on
-		$this->rights[$r][5] = 'readperms';
+		$this->rights[$r][4] = $group;       // Visible if option MAIN_USE_ADVANCED_PERMS is on
+		$this->rights[$r][5] = $perm;
 
 		$r++;
 		$this->rights[$r][0] = 353;
 		$this->rights[$r][1] = 'Creer/modifier les groupes et leurs permissions';
 		$this->rights[$r][2] = 'w';
 		$this->rights[$r][3] = 0;
-		$this->rights[$r][4] = 'group_advance';      // Visible if option MAIN_USE_ADVANCED_PERMS is on
+		$this->rights[$r][4] = $group;      // Visible if option MAIN_USE_ADVANCED_PERMS is on
 		$this->rights[$r][5] = 'write';
 
 		$r++;
@@ -196,7 +197,7 @@ class modUser extends DolibarrModules
 		$this->rights[$r][1] = 'Supprimer ou desactiver les groupes';
 		$this->rights[$r][2] = 'd';
 		$this->rights[$r][3] = 0;
-		$this->rights[$r][4] = 'group_advance';      // Visible if option MAIN_USE_ADVANCED_PERMS is on
+		$this->rights[$r][4] = $group;      // Visible if option MAIN_USE_ADVANCED_PERMS is on
 		$this->rights[$r][5] = 'delete';
 
 		$r++;
@@ -214,51 +215,87 @@ class modUser extends DolibarrModules
 
 		// Exports
 		$r=0;
-
+		$lastname = 'u.lastname';
+		$log = 'u.login';
+		$gen = 'u.gender';
+		$name = 'u.firstname';
+		$rowid = 'u.rowid';
+		$firstname = "Firstname";
+		$job = 'u.job';
+		$emp = 'u.employee';
+		$aco_code = 'u.accountancy_code';
+		$town = 'u.town';
+		$adres = 'u.address';
+		$zip = 'u.zip';
+		$ofice_phone = 'u.office_phone';
+		$ofice_fax = 'u.office_fax';
+		$user_mobil ='u.user_mobile';
+		$email = 'u.email';
+		$signa = 'u.signature';
+		$note = 'u.note';
+		$week_hours = 'u.weeklyhours';
+		$thm = 'u.thm';
+		$tjm = 'u.tjm';
+		$fk = 'u.fk_user';
+		$api_key = 'u.api_key';
+		$color = 'u.color';
+		$salary = 'u.salary';
+		$deteemploy = 'u.dateemployment';
+		$birth = 'u.birth';
+		$tms = 'u.tms';
+		$datec = 'u.datec';
+		$datalastlogin = 'u.datelastlogin';
+		$admin = 'u.admin';
+		$statut = 'u.statut';
+		$status = 'Status';
+		$dataprevlog = 'u.datepreviouslogin';
+		$fk_member = 'u.fk_member'; 
+		$fk_soc = 'u.fk_soc';
+		$fk_count = 'u.fk_country';
 		$r++;
 		$this->export_code[$r]=$this->rights_class.'_'.$r;
 		$this->export_label[$r]='List of users and attributes';
 		$this->export_permission[$r]=array(array("user","user","export"));
 		$this->export_fields_array[$r]=array(
-		    'u.rowid'=>"Id",'u.login'=>"Login",'u.lastname'=>"Lastname",'u.firstname'=>"Firstname",'u.employee'=>"Employee",'u.job'=>"PostOrFunction",'u.gender'=>"Gender",
-		    'u.accountancy_code'=>"UserAccountancyCode",
-		    'u.address'=>"Address",'u.zip'=>"Zip",'u.town'=>"Town",
-		    'u.office_phone'=>'Phone','u.user_mobile'=>"Mobile",'u.office_fax'=>'Fax',
-		    'u.email'=>"Email",'u.note'=>"Note",'u.signature'=>'Signature',
-		    'u.fk_user'=>'HierarchicalResponsible','u.thm'=>'THM','u.tjm'=>'TJM','u.weeklyhours'=>'WeeklyHours',
-		    'u.dateemployment'=>'DateEmployment','u.salary'=>'Salary','u.color'=>'Color','u.api_key'=>'ApiKey',
-		    'u.birth'=>'BirthdayDate',
-		    'u.datec'=>"DateCreation",'u.tms'=>"DateLastModification",
-			'u.admin'=>"Administrator",'u.statut'=>'Status','u.datelastlogin'=>'LastConnexion','u.datepreviouslogin'=>'PreviousConnexion',
-			'u.fk_socpeople'=>"IdContact",'u.fk_soc'=>"IdCompany",'u.fk_member'=>"MemberId"
+		    $rowid=>"Id",$log=>"Login",$lastname=>"Lastname",$name=>$firstname,$emp=>"Employee",$job=>"PostOrFunction",$gen=>"Gender",
+		    $aco_code=>"UserAccountancyCode",
+		    $adres=>"Address",$zip=>"Zip",$town=>"Town",
+		    $ofice_phone=>'Phone',$user_mobil=>"Mobile",$ofice_fax =>'Fax',
+		    $email=>"Email",$note=>"Note",$signa=>'Signature',
+		    $fk=>'HierarchicalResponsible',$thm=>'THM',$tjm=>'TJM',$week_hours=>'WeeklyHours',
+		    $deteemploy=>'DateEmployment',$salary=>'Salary',$color=>'Color',$api_key=>'ApiKey',
+		    $birth=>'BirthdayDate',
+		    $datec=>"DateCreation",$tms=>"DateLastModification",
+			$admin=>"Administrator",$statut=>$status,$datalastlogin=>'LastConnexion',$dataprevlog=>'PreviousConnexion',
+			'u.fk_socpeople'=>"IdContact",$fk_soc=>"IdCompany",$fk_member=>"MemberId"
 		);
 		$this->export_TypeFields_array[$r]=array(
-			'u.rowid'=>'Numeric', 'u.login'=>"Text",'u.lastname'=>"Text",'u.firstname'=>"Text",'u.employee'=>'Boolean','u.job'=>'Text',
-		    'u.accountancy_code'=>'Text',
-		    'u.address'=>"Text",'u.zip'=>"Text",'u.town'=>"Text",
-		    'u.office_phone'=>'Text','u.user_mobile'=>'Text','u.office_fax'=>'Text',
-			'u.email'=>'Text','u.datec'=>"Date",'u.tms'=>"Date",'u.admin'=>"Boolean",'u.statut'=>'Status','u.note'=>"Text",'u.datelastlogin'=>'Date',
-		    'u.fk_user'=>"List:user:login",
-		    'u.birth'=>'Date',
-		    'u.datepreviouslogin'=>'Date','u.fk_soc'=>"List:societe:nom:rowid",'u.fk_member'=>"List:adherent:firstname"
+			$rowid=>'Numeric', $log=>"Text",$lastname=>"Text",$name=>"Text",$emp=>'Boolean',$job=>'Text',
+		    $aco_code=>'Text',
+		    $adres=>"Text",$zip=>"Text",$town=>"Text",
+		    $ofice_phone=>'Text',$user_mobil=>'Text',$ofice_fax =>'Text',
+			$email=>'Text',$datec=>"Date",$tms=>"Date",$admin=>"Boolean",$statut=>$status,$note=>"Text",$datalastlogin=>'Date',
+		    $fk=>"List:user:login",
+		    $birth=>'Date',
+		    $dataprevlog=>'Date',$fk_soc=>"List:societe:nom:rowid",$fk_member=>"List:adherent:firstname"
 		);
 		$this->export_entities_array[$r]=array(
-			'u.rowid'=>"user",'u.login'=>"user",'u.lastname'=>"user",'u.firstname'=>"user",'u.employee'=>'user','u.job'=>'user','u.gender'=>'user',
-		    'u.accountancy_code'=>'user',
-		    'u.address'=>"user",'u.zip'=>"user",'u.town'=>"user",
-		    'u.office_phone'=>'user','u.user_mobile'=>'user','u.office_fax'=>'user',
-		    'u.email'=>'user','u.note'=>"user",'u.signature'=>'user',
-		    'u.fk_user'=>'user','u.thm'=>'user','u.tjm'=>'user','u.weeklyhours'=>'user',
-		    'u.dateemployment'=>'user','u.salary'=>'user','u.color'=>'user','u.api_key'=>'user',
-		    'u.birth'=>'user',
-		    'u.datec'=>"user",'u.tms'=>"user",
-		    'u.admin'=>"user",'u.statut'=>'user','u.datelastlogin'=>'user','u.datepreviouslogin'=>'user',
-		    'u.fk_socpeople'=>"contact",'u.fk_soc'=>"company",'u.fk_member'=>"member"
+			$rowid=>"user",$log=>"user",$lastname=>"user",$name=>"user",$emp=>'user',$job=>'user',$gen=>'user',
+		    $aco_code=>'user',
+		    $adres=>"user",$zip=>"user",$town=>"user",
+		    $ofice_phone=>'user',$user_mobil=>'user',$ofice_fax =>'user',
+		    $email=>'user',$note=>"user",$signa=>'user',
+		    $fk=>'user',$thm=>'user',$tjm=>'user',$week_hours=>'user',
+		    $deteemploy=>'user',$salary=>'user',$color=>'user',$api_key=>'user',
+		    $birth=>'user',
+		    $datec=>"user",$tms=>"user",
+		    $admin=>"user",$statut=>'user',$datalastlogin=>'user',$dataprevlog=>'user',
+		    'u.fk_socpeople'=>"contact",$fk_soc=>"company",$fk_member=>"member"
 		);
         if (empty($conf->adherent->enabled))
         {
-            unset($this->export_fields_array[$r]['u.fk_member']);
-            unset($this->export_entities_array[$r]['u.fk_member']);
+            unset($this->export_fields_array[$r][$fk_member]);
+            unset($this->export_entities_array[$r][$fk_member]);
         }
 		$this->export_sql_start[$r]='SELECT DISTINCT ';
 		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'user as u';
@@ -275,17 +312,17 @@ class modUser extends DolibarrModules
 		$this->import_entities_array[$r]=array();		// We define here only fields that use another icon that the one defined into import_icon
 		$this->import_tables_array[$r]=array('u'=>MAIN_DB_PREFIX.'user','extra'=>MAIN_DB_PREFIX.'user_extrafields');	// List of tables to insert into (insert done in same order)
 		$this->import_fields_array[$r]=array(
-		    'u.login'=>"Login*",'u.lastname'=>"Name*",'u.firstname'=>"Firstname",'u.employee'=>"Employee*",'u.job'=>"PostOrFunction",'u.gender'=>"Gender",
-		    'u.accountancy_code'=>"UserAccountancyCode",
-			'u.pass_crypted'=>"Password",'u.admin'=>"Administrator",'u.fk_soc'=>"Company*",'u.address'=>"Address",'u.zip'=>"Zip",'u.town'=>"Town",
-			'u.fk_state'=>"StateId",'u.fk_country'=>"CountryCode",
-		    'u.office_phone'=>"Phone",'u.user_mobile'=>"Mobile",'u.office_fax'=>"Fax",
-		    'u.email'=>"Email",'u.note'=>"Note",'u.signature'=>'Signature',
-		    'u.fk_user'=>'HierarchicalResponsible','u.thm'=>'THM','u.tjm'=>'TJM','u.weeklyhours'=>'WeeklyHours',
-			'u.dateemployment'=>'DateEmployment','u.salary'=>'Salary','u.color'=>'Color','u.api_key'=>'ApiKey',
-		    'u.birth'=>'BirthdayDate',
-		    'u.datec'=>"DateCreation",
-		    'u.statut'=>'Status'
+		    $log=>"Login*",$lastname=>"Name*",$name=>$firstname,$emp=>"Employee*",$job=>"PostOrFunction",$gen=>"Gender",
+		    $aco_code=>"UserAccountancyCode",
+			'u.pass_crypted'=>"Password",$admin=>"Administrator",$fk_soc=>"Company*",$adres=>"Address",$zip=>"Zip",$town=>"Town",
+			'u.fk_state'=>"StateId",$fk_count=>"CountryCode",
+		    $ofice_phone=>"Phone",$user_mobil=>"Mobile",$ofice_fax =>"Fax",
+		    $email=>"Email",$note=>"Note",$signa=>'Signature',
+		    $fk=>'HierarchicalResponsible',$thm=>'THM',$tjm=>'TJM',$week_hours=>'WeeklyHours',
+			$deteemploy=>'DateEmployment',$salary=>'Salary',$color=>'Color',$api_key=>'ApiKey',
+		    $birth=>'BirthdayDate',
+		    $datec=>"DateCreation",
+		    $statut=>$status
 		);
 		// Add extra fields
 		$sql="SELECT name, label, fieldrequired FROM ".MAIN_DB_PREFIX."extrafields WHERE elementtype = 'user' AND entity IN (0,".$conf->entity.")";
@@ -303,25 +340,25 @@ class modUser extends DolibarrModules
 		$this->import_fieldshidden_array[$r]=array('u.fk_user_creat'=>'user->id','extra.fk_object'=>'lastrowid-'.MAIN_DB_PREFIX.'user');    // aliastable.field => ('user->id' or 'lastrowid-'.tableparent)
 		$this->import_convertvalue_array[$r]=array(
 			'u.fk_state'=>array('rule'=>'fetchidfromcodeid','classfile'=>'/core/class/cstate.class.php','class'=>'Cstate','method'=>'fetch','dict'=>'DictionaryState'),
-		    'u.fk_country'=>array('rule'=>'fetchidfromcodeid','classfile'=>'/core/class/ccountry.class.php','class'=>'Ccountry','method'=>'fetch','dict'=>'DictionaryCountry'),
-		    'u.salary'=>array('rule'=>'numeric')
+		    $fk_count=>array('rule'=>'fetchidfromcodeid','classfile'=>'/core/class/ccountry.class.php','class'=>'Ccountry','method'=>'fetch','dict'=>'DictionaryCountry'),
+		    $salary=>array('rule'=>'numeric')
 		);
-		//$this->import_convertvalue_array[$r]=array('s.fk_soc'=>array('rule'=>'lastrowid',table='t');
+		
 		$this->import_regex_array[$r]=array(
-			'u.employee'=>'^[0|1]',
-			'u.datec'=>'^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]( [0-9][0-9]:[0-9][0-9]:[0-9][0-9])?$',
-            'u.dateemployment'=>'^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$',
-            'u.birth'=>'^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$'
+			$emp=>'^[0|1]',
+			$datec=>'^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]( [0-9][0-9]:[0-9][0-9]:[0-9][0-9])?$',
+            $deteemploy=>'^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$',
+            $birth=>'^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$'
 		);
 		$this->import_examplevalues_array[$r]=array(
-			'u.lastname'=>"Doe", 'u.firstname'=>'John', 'u.login'=>'jdoe', 'u.employee'=>'0 or 1', 'u.job'=>'CTO', 'u.gender'=>'0 or 1',
+			$lastname=>"Doe", $name=>'John', $log=>'jdoe', $emp=>'0 or 1', $job=>'CTO', $gen=>'0 or 1',
 			'u.pass_crypted'=>'Encrypted password',
-			'u.fk_soc'=>'0 (internal user) or company name (external user)', 'u.datec'=>dol_print_date(dol_now(), '%Y-%m-%d'), 'u.address'=>"61 jump street",
-			'u.zip'=>"123456",'u.town'=>"Big town",'u.fk_country'=>'US, FR, DE...','u.office_phone'=>"0101010101",'u.office_fax'=>"0101010102",
-			'u.email'=>"test@mycompany.com",'u.salary'=>"10000",'u.note'=>"This is an example of note for record",'u.datec'=>"2015-01-01 or 2015-01-01 12:30:00",
-		    'u.statut'=>"0 (closed) or 1 (active)",
+			$fk_soc=>'0 (internal user) or company name (external user)', $datec=>dol_print_date(dol_now(), '%Y-%m-%d'), $adres=>"61 jump street",
+			$zip=>"123456",$town=>"Big town",$fk_count=>'US, FR, DE...',$ofice_phone=>"0101010101",$ofice_fax =>"0101010102",
+			$email=>"test@mycompany.com",$salary=>"10000",$note=>"This is an example of note for record",$datec=>"2015-01-01 or 2015-01-01 12:30:00",
+		    $statut=>"0 (closed) or 1 (active)",
 		);
-		$this->import_updatekeys_array[$r]=array('u.lastname'=>'Lastname','u.firstname'=>'Firstname','u.login'=>'Login');
+		$this->import_updatekeys_array[$r]=array($lastname=>'Lastname',$name=>'Firstname',$log=>'Login');
 	}
 
 
