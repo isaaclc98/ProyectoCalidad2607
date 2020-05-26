@@ -28,7 +28,7 @@ function openkeypad(keypadname)
 }
 function addvalue(keypadname, formname, valueToAdd)
 {
-	myform=document.forms[formname];
+	var myform=document.forms[formname];
 	if (myform.elements[keypadname].value=="0")
 		myform.elements[keypadname].value="";
 	myform.elements[keypadname].value+=valueToAdd;

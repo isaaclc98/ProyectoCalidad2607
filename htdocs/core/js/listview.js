@@ -105,7 +105,7 @@ function Listview_GoToPage(idListe,pageNumber){
 }
 function Listview_submitSearch(obj) {
 
-	$form = $(obj).closest('form');
+	var $form = $(obj).closest('form');
 	console.log($form);
 	if($form.length>0){
 		$form.submit();
@@ -128,7 +128,7 @@ function Listview_launch_downloadAs(mode,url,token,session_name) {
 function Listview_downloadAs(obj, mode,url,token,session_name) {
 
 	$form = $(obj).closest('form');
-	$div = $form.find('div.tabsAction');
+	var $div = $form.find('div.tabsAction');
 	$div.append('<input type="hidden" listviewtbs="hidden" name="token" value="'+token+'" />');
 	$div.append('<input type="hidden" listviewtbs="hidden" name="mode" value="'+mode+'" />');
 	$div.append('<input type="hidden" listviewtbs="hidden" name="url" value="'+url+'" />');

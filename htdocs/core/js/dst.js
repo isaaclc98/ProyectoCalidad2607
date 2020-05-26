@@ -68,7 +68,7 @@ function DisplayDstSwitchDates(firstsecond)
     var lastOffset = 99;
 
     // Loop through every month of the current year
-    for (i = 0; i < 12; i++)
+    for (let i = 0; i < 12; i++)
     {
         // Fetch the timezone value for the month
         var newDate = new Date(Date.UTC(year, i, 0, 0, 0, 0, 0));
@@ -108,7 +108,7 @@ function FindDstSwitchDate(year, month)
     var dstDate;
 
     // Loop to find the exact day a timezone adjust occurs
-    for (day = 0; day < 50; day++)
+    for (let day = 0; day < 50; day++)
     {
         var tmpDate = new Date(Date.UTC(year, month, day, 0, 0, 0, 0));
         var tmpOffset = -1 * tmpDate.getTimezoneOffset() / 60;

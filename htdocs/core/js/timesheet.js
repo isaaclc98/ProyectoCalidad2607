@@ -130,11 +130,11 @@ function updateTotal(days,mode)
             	/* alert(element.value);*/
                 if (element.value)
                 {
-                	result=parseTime(element.value,taskTime);
+                	var result=parseTime(element.value,taskTime);
                 }
                 else
                 {
-                	result=parseTime(element.innerHTML,taskTime);
+                	var result=parseTime(element.innerHTML,taskTime);
                 }
                 if (result >= 0)
                 {
@@ -230,7 +230,7 @@ function updateTotal(days,mode)
         		totalmin = totalmin + taskTime.getMinutes();
         	}
         }
-        morehours = Math.floor(totalmin / 60);
+        var morehours = Math.floor(totalmin / 60);
         totalmin = totalmin % 60;
     	jQuery('.totalDayAll').text(pad(morehours + totalhour)+':'+pad(totalmin));
     }

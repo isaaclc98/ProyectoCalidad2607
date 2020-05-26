@@ -102,7 +102,7 @@ function verifDifference() {
 
 	if (encaisse > du) {
 
-		resultat = Math.round ( (encaisse - du) * 100 ) / 100;
+		var resultat = Math.round ( (encaisse - du) * 100 ) / 100;
 		document.getElementById('frmDifference').txtRendu.value = resultat.toFixed(2);
 
 	} else if (encaisse == du) {

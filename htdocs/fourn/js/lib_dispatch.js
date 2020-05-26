@@ -110,10 +110,10 @@ function onChangeDispatchLineQty() {
 
 	if (index >= 0 && type && qty >= 0) {
 		nbrTrs = $("tr[name^='"+type+"_'][name$='_"+index+"']").length;
-		qtyChanged = parseFloat($(this).val()) - qty; // qty changed
-		qtyDispatching = parseFloat($("#qty_"+(nbrTrs-1)+"_"+index).val()); // qty currently being dispatched
-		qtyOrdered = parseFloat($("#qty_ordered_0_"+index).val()); // qty ordered
-		qtyDispatched = parseFloat($("#qty_dispatched_0_"+index).val()); // qty already dispatched
+		var qtyChanged = parseFloat($(this).val()) - qty; // qty changed
+		var qtyDispatching = parseFloat($("#qty_"+(nbrTrs-1)+"_"+index).val()); // qty currently being dispatched
+		var qtyOrdered = parseFloat($("#qty_ordered_0_"+index).val()); // qty ordered
+		var qtyDispatched = parseFloat($("#qty_dispatched_0_"+index).val()); // qty already dispatched
 
 		console.log("onChangeDispatchLineQty qtyChanged: " + qtyChanged + " qtyDispatching: " + qtyDispatching + " qtyOrdered: " + qtyOrdered + " qtyDispatched: "+ qtyDispatched);
 

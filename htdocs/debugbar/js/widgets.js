@@ -30,7 +30,7 @@
             this.$tooltip = $('<span />').addClass(csscls('tooltip disabled')).appendTo(this.$el);
             this.bindAttr('tooltip', function(tooltip) {
                 if (tooltip['html']) {
-                    tooltipHTML = $('<span />').html(tooltip['html']).addClass(csscls('tooltip-html'));
+                    var tooltipHTML = $('<span />').html(tooltip['html']).addClass(csscls('tooltip-html'));
                     this.$tooltip.html(tooltipHTML).removeClass(csscls('disabled'));
                     if (tooltip['class']) {
                         this.$tooltip.addClass(csscls(tooltip['class']));

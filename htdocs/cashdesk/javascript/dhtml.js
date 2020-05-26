@@ -22,7 +22,7 @@ function file(fichier) {
 	// Instanciation de l'objet pour Mozilla, Konqueror, Opera, Safari, etc ...
 	if (window.XMLHttpRequest) {
 
-		xhr_object = new XMLHttpRequest ();
+		var xhr_object = new XMLHttpRequest ();
 
 	// ... ou pour IE
 	} else if (window.ActiveXObject) {
