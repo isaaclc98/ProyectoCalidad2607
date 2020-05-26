@@ -38,7 +38,6 @@
 //   new lines of code and hundreds new features.
 //
 // Main features:
-//  * no external libraries are required for the basic functions;
 //  * all standard page formats, custom page formats, custom margins and units of measure;
 //  * UTF-8 Unicode and Right-To-Left languages;
 //  * TrueTypeUnicode, TrueType, Type1 and CID-0 fonts;
@@ -46,7 +45,6 @@
 //  * methods to publish some XHTML + CSS code, Javascript and Forms;
 //  * images, graphic (geometric figures) and transformation methods;
 //  * supports JPEG, PNG and SVG images natively, all images supported by GD (GD, GD2, GD2PART, GIF, JPEG, PNG, BMP, XBM, XPM) and all images supported via ImageMagick (http://www.imagemagick.org/www/formats.html)
-//  * 1D and 2D barcodes: CODE 39, ANSI MH10.8M-1983, USD-3, 3 of 9, CODE 93, USS-93, Standard 2 of 5, Interleaved 2 of 5, CODE 128 A/B/C, 2 and 5 Digits UPC-Based Extension, EAN 8, EAN 13, UPC-A, UPC-E, MSI, POSTNET, PLANET, RMS4CC (Royal Mail 4-state Customer Code), CBC (Customer Bar Code), KIX (Klant index - Customer index), Intelligent Mail Barcode, Onecode, USPS-B-3200, CODABAR, CODE 11, PHARMACODE, PHARMACODE TWO-TRACKS, Datamatrix, QR-Code, PDF417;
 //  * JPEG and PNG ICC profiles, Grayscale, RGB, CMYK, Spot Colors and Transparencies;
 //  * automatic page header and footer management;
 //  * document encryption up to 256 bit and digital signature certifications;
@@ -690,7 +688,14 @@ class TCPDF {
 	 * @since 5.9.174 (2012-07-25)
 	 * @protected
 	 */
-	protected $txtshadow = array('enabled'=>false, 'depth_w'=>0, 'depth_h'=>0, 'color'=>false, 'opacity'=>1, 'blend_mode'=>'Normal');
+
+	DORA='opacity';
+	DORA1='enabled';
+	DORA2='depth_w';
+	DORA3='depth_h';
+	DORA4='color';
+	DORA5='blend_mode';
+	protected $txtshadow = array(DORA1=>false, DORA2=>0, DORA3=>0, DORA4=>false, DORA=>1, DORA5=>'Normal');
 
 	/**
 	 * Default number of columns for html table.
@@ -1686,7 +1691,7 @@ class TCPDF {
 		'clip' => 'auto',
 		'clip-path' => 'none',
 		'clip-rule' => 'nonzero',
-		'color' => 'black',
+		DORA4 => 'black',
 		'color-interpolation' => 'sRGB',
 		'color-interpolation-filters' => 'linearRGB',
 		'color-profile' => 'auto',
@@ -1721,7 +1726,7 @@ class TCPDF {
 		'marker-mid' => 'none',
 		'marker-start' => 'none',
 		'mask' => 'none',
-		'opacity' => 1,
+		DORA => 1,
 		'overflow' => 'auto',
 		'pointer-events' => 'visiblePainted',
 		'shape-rendering' => 'auto',
@@ -1970,7 +1975,7 @@ class TCPDF {
 		$this->signature_appearance = array('page' => 1, 'rect' => '0 0 0 0', 'name' => 'Signature');
 		$this->empty_signature_appearance = array();
 		// user's rights
-		$this->ur['enabled'] = false;
+		$this->ur[DORA1] = false;
 		$this->ur['document'] = '/FullSave';
 		$this->ur['annots'] = '/Create/Delete/Modify/Copy/Import/Export';
 		$this->ur['form'] = '/Add/Delete/FillIn/Import/Export/SubmitStandalone/SpawnTemplate';
@@ -2727,7 +2732,7 @@ class TCPDF {
 
 	/**
 	 * Adjust the internal Cell padding array to take account of the line width.
-	 * @param $brd (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $brd (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(0, 0, 0)))
 	 * @return array of adjustments
 	 * @public
 	 * @since 5.9.000 (2010-10-03)
@@ -3455,7 +3460,7 @@ class TCPDF {
 			$this->SetX($header_x);
 			$this->MultiCell($cw, $cell_height, $headerdata['string'], 0, '', 0, 1, '', '', true, 0, false, true, 0, 'T', false);
 			// print an ending header line
-			$this->SetLineStyle(array('width' => 0.85 / $this->k, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $headerdata['line_color']));
+			$this->SetLineStyle(array('width' => 0.85 / $this->k, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => $headerdata['line_color']));
 			$this->SetY((2.835 / $this->k) + max($imgy, $this->y));
 			if ($this->rtl) {
 				$this->SetX($this->original_rMargin);
@@ -3494,7 +3499,7 @@ class TCPDF {
 		$this->SetTextColorArray($this->footer_text_color);
 		//set style for cell border
 		$line_width = (0.85 / $this->k);
-		$this->SetLineStyle(array('width' => $line_width, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $this->footer_line_color));
+		$this->SetLineStyle(array('width' => $line_width, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => $this->footer_line_color));
 		//print document barcode
 		$barcode = $this->getBarcode();
 		if (!empty($barcode)) {
@@ -4908,7 +4913,7 @@ class TCPDF {
 	 * @param $fstroke (int) outline size in user units (false = disable)
 	 * @param $fclip (boolean) if true activate clipping mode (you must call StartTransform() before this function and StopTransform() to stop the clipping tranformation).
 	 * @param $ffill (boolean) if true fills the text
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(0, 0, 0)))
 	 * @param $ln (int) Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right (or left for RTL languages)</li><li>1: to the beginning of the next line</li><li>2: below</li></ul>Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value: 0.
 	 * @param $align (string) Allows to center or align the text. Possible values are:<ul><li>L or empty string: left align (default value)</li><li>C: center</li><li>R: right align</li><li>J: justify</li></ul>
 	 * @param $fill (boolean) Indicates if the cell background must be painted (true) or transparent (false).
@@ -5010,7 +5015,7 @@ class TCPDF {
 	 * @param $w (float) Cell width. If 0, the cell extends up to the right margin.
 	 * @param $h (float) Cell height. Default value: 0.
 	 * @param $txt (string) String to print. Default value: empty string.
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(0, 0, 0)))
 	 * @param $ln (int) Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right (or left for RTL languages)</li><li>1: to the beginning of the next line</li><li>2: below</li></ul> Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value: 0.
 	 * @param $align (string) Allows to center or align the text. Possible values are:<ul><li>L or empty string: left align (default value)</li><li>C: center</li><li>R: right align</li><li>J: justify</li></ul>
 	 * @param $fill (boolean) Indicates if the cell background must be painted (true) or transparent (false).
@@ -5035,7 +5040,7 @@ class TCPDF {
 		}
 		$this->checkPageBreak($h + $this->cell_margin['T'] + $this->cell_margin['B']);
 		// apply text shadow if enabled
-		if ($this->txtshadow['enabled']) {
+		if ($this->txtshadow[DORA1]) {
 			// save data
 			$x = $this->x;
 			$y = $this->y;
@@ -5044,13 +5049,13 @@ class TCPDF {
 			$sc = $this->strokecolor;
 			$alpha = $this->alpha;
 			// print shadow
-			$this->x += $this->txtshadow['depth_w'];
-			$this->y += $this->txtshadow['depth_h'];
-			$this->SetFillColorArray($this->txtshadow['color']);
-			$this->SetTextColorArray($this->txtshadow['color']);
-			$this->SetDrawColorArray($this->txtshadow['color']);
-			if ($this->txtshadow['opacity'] != $alpha['CA']) {
-				$this->setAlpha($this->txtshadow['opacity'], $this->txtshadow['blend_mode']);
+			$this->x += $this->txtshadow[DORA2];
+			$this->y += $this->txtshadow[DORA3];
+			$this->SetFillColorArray($this->txtshadow[DORA4]);
+			$this->SetTextColorArray($this->txtshadow[DORA4]);
+			$this->SetDrawColorArray($this->txtshadow[DORA4]);
+			if ($this->txtshadow[DORA] != $alpha['CA']) {
+				$this->setAlpha($this->txtshadow[DORA], $this->txtshadow[DORA5]);
 			}
 			if ($this->state == 2) {
 				$this->_out($this->getCellCode($w, $h, $txt, $border, $ln, $align, $fill, $link, $stretch, true, $calign, $valign));
@@ -5061,7 +5066,7 @@ class TCPDF {
 			$this->SetFillColorArray($bc);
 			$this->SetTextColorArray($fc);
 			$this->SetDrawColorArray($sc);
-			if ($this->txtshadow['opacity'] != $alpha['CA']) {
+			if ($this->txtshadow[DORA] != $alpha['CA']) {
 				$this->setAlpha($alpha['CA'], $alpha['BM'], $alpha['ca'], $alpha['AIS']);
 			}
 		}
@@ -5078,7 +5083,7 @@ class TCPDF {
 	 * @param $w (float) Cell width. If 0, the cell extends up to the right margin.
 	 * @param $h (float) Cell height. Default value: 0.
 	 * @param $txt (string) String to print. Default value: empty string.
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(0, 0, 0)))
 	 * @param $ln (int) Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right (or left for RTL languages)</li><li>1: to the beginning of the next line</li><li>2: below</li></ul>Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value: 0.
 	 * @param $align (string) Allows to center or align the text. Possible values are:<ul><li>L or empty string: left align (default value)</li><li>C: center</li><li>R: right align</li><li>J: justify</li></ul>
 	 * @param $fill (boolean) Indicates if the cell background must be painted (true) or transparent (false).
@@ -5577,7 +5582,7 @@ class TCPDF {
 	 * @param $y (float) Y coordinate.
 	 * @param $w (float) Cell width.
 	 * @param $h (float) Cell height.
-	 * @param $brd (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $brd (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(0, 0, 0)))
 	 * @return string containing cell border code
 	 * @protected
 	 * @see SetLineStyle()
@@ -5768,7 +5773,7 @@ class TCPDF {
 	 * @param $w (float) Width of cells. If 0, they extend up to the right margin of the page.
 	 * @param $h (float) Cell minimum height. The cell extends automatically if needed.
 	 * @param $txt (string) String to print
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(0, 0, 0)))
 	 * @param $align (string) Allows to center or align the text. Possible values are:<ul><li>L or empty string: left align</li><li>C: center</li><li>R: right align</li><li>J: justification (default value when $ishtml=false)</li></ul>
 	 * @param $fill (boolean) Indicates if the cell background must be painted (true) or transparent (false).
 	 * @param $ln (int) Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right</li><li>1: to the beginning of the next line [DEFAULT]</li><li>2: below</li></ul>
@@ -6148,7 +6153,7 @@ class TCPDF {
 	 * @param $reseth (boolean) if true reset the last cell height (default false).
 	 * @param $autopadding (boolean) if true, uses internal padding and automatically adjust it to account for line width (default true).
 	 * @param $cellpadding (float) Internal cell padding, if empty uses default cell padding.
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(0, 0, 0)))
 	 * @return float Return the minimal height needed for multicell method for printing the $txt param.
 	 * @author Alexander Escalona Fern\E1ndez, Nicola Asuni
 	 * @public
@@ -6268,7 +6273,7 @@ class TCPDF {
 	 * @param $reseth (boolean) if true reset the last cell height (default false).
 	 * @param $autopadding (boolean) if true, uses internal padding and automatically adjust it to account for line width (default true).
 	 * @param $cellpadding (float) Internal cell padding, if empty uses default cell padding.
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(0, 0, 0)))
 	 * @return float Return the minimal height needed for multicell method for printing the $txt param.
 	 * @author Nicola Asuni, Alexander Escalona Fern\E1ndez
 	 * @public
@@ -6842,7 +6847,7 @@ class TCPDF {
 	 * @param $palign (string) Allows to center or align the image on the current line. Possible values are:<ul><li>L : left align</li><li>C : center</li><li>R : right align</li><li>'' : empty string : left for LTR or right for RTL</li></ul>
 	 * @param $ismask (boolean) true if this image is a mask, false otherwise
 	 * @param $imgmask (mixed) image object returned by this function or false
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(0, 0, 0)))
 	 * @param $fitbox (mixed) If not false scale image dimensions proportionally to fit within the ($w, $h) box. $fitbox can be true or a 2 characters string indicating the image alignment inside the box. The first character indicate the horizontal alignment (L = left, C = center, R = right) the second character indicate the vertical algnment (T = top, M = middle, B = bottom).
 	 * @param $hidden (boolean) If true do not display the image.
 	 * @param $fitonpage (boolean) If true the image is resized to not exceed page dimensions.
@@ -11425,8 +11430,8 @@ class TCPDF {
 			$this->linestyleDash = sprintf('[%s] %F d', $dash_string, $style['phase']);
 			$s .= $this->linestyleDash.' ';
 		}
-		if (isset($style['color'])) {
-			$s .= $this->SetDrawColorArray($style['color'], true).' ';
+		if (isset($style[DORA4])) {
+			$s .= $this->SetDrawColorArray($style[DORA4], true).' ';
 		}
 		if (!$ret AND ($this->state == 2)) {
 			$this->_out($s);
@@ -12584,7 +12589,7 @@ class TCPDF {
 			return;
 		}
 		if (strpos($this->javascript, 'this.addField') > 0) {
-			if (!$this->ur['enabled']) {
+			if (!$this->ur[DORA1]) {
 				//$this->setUserRights();
 			}
 			// the following two lines are used to avoid form fields duplication after saving
@@ -12647,7 +12652,7 @@ class TCPDF {
 		$this->javascript .= sprintf("f".$name."=this.addField('%s','%s',%u,[%F,%F,%F,%F]);", $name, $type, $this->PageNo()-1, $x*$k, ($this->h-$y)*$k+1, ($x+$w)*$k, ($this->h-$y-$h)*$k+1)."\n";
 		$this->javascript .= 'f'.$name.'.textSize='.$this->FontSizePt.";\n";
 		foreach($prop as $key => $val) {
-			if (strcmp(substr($key, -5), 'Color') == 0) {
+			if (strcmp(substr($key, -5), DORA4) == 0) {
 				$val = TCPDF_COLORS::_JScolor($val);
 			} else {
 				$val = "'".$val."'";
@@ -13212,10 +13217,10 @@ class TCPDF {
 		$tmpid = $this->startTemplate($w, $h, false);
 		$bw = (2 / $this->k); // border width
 		$border = array(
-			'L' => array('width' => $bw, 'cap' => 'square', 'join' => 'miter', 'dash' => 0, 'color' => array(231)),
-			'R' => array('width' => $bw, 'cap' => 'square', 'join' => 'miter', 'dash' => 0, 'color' => array(51)),
-			'T' => array('width' => $bw, 'cap' => 'square', 'join' => 'miter', 'dash' => 0, 'color' => array(231)),
-			'B' => array('width' => $bw, 'cap' => 'square', 'join' => 'miter', 'dash' => 0, 'color' => array(51)));
+			'L' => array('width' => $bw, 'cap' => 'square', 'join' => 'miter', 'dash' => 0, DORA4 => array(231)),
+			'R' => array('width' => $bw, 'cap' => 'square', 'join' => 'miter', 'dash' => 0, DORA4 => array(51)),
+			'T' => array('width' => $bw, 'cap' => 'square', 'join' => 'miter', 'dash' => 0, DORA4 => array(231)),
+			'B' => array('width' => $bw, 'cap' => 'square', 'join' => 'miter', 'dash' => 0, DORA4 => array(51)));
 		$this->SetFillColor(204);
 		$this->Cell($w, $h, $caption, $border, 0, 'C', true, '', 1, false, 'T', 'M');
 		$this->endTemplate();
@@ -13442,7 +13447,7 @@ class TCPDF {
 			$signature='/Modify',
 			$ef='/Create/Delete/Modify/Import',
 			$formex='') {
-		$this->ur['enabled'] = $enable;
+		$this->ur[DORA1] = $enable;
 		$this->ur['document'] = $document;
 		$this->ur['annots'] = $annots;
 		$this->ur['form'] = $form;
@@ -13982,7 +13987,7 @@ class TCPDF {
 			// remove trailing slash
 			$bm = substr($bm, 1);
 		}
-		if (!in_array($bm, array('Normal', 'Multiply', 'Screen', 'Overlay', 'Darken', 'Lighten', 'ColorDodge', 'ColorBurn', 'HardLight', 'SoftLight', 'Difference', 'Exclusion', 'Hue', 'Saturation', 'Color', 'Luminosity'))) {
+		if (!in_array($bm, array('Normal', 'Multiply', 'Screen', 'Overlay', 'Darken', 'Lighten', 'ColorDodge', 'ColorBurn', 'HardLight', 'SoftLight', 'Difference', 'Exclusion', 'Hue', 'Saturation', DORA4, 'Luminosity'))) {
 			$bm = 'Normal';
 		}
 		$ais = $ais ? true : false;
@@ -14226,7 +14231,7 @@ class TCPDF {
 	 * @public
 	 */
 	public function cropMark($x, $y, $w, $h, $type='T,R,B,L', $color=array(100,100,100,100,'All')) {
-		$this->SetLineStyle(array('width' => (0.5 / $this->k), 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $color));
+		$this->SetLineStyle(array('width' => (0.5 / $this->k), 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => $color));
 		$type = strtoupper($type);
 		$type = preg_replace('/[^A-Z\-\,]*/', '', $type);
 		// split type in single components
@@ -14297,7 +14302,7 @@ class TCPDF {
 	 * @public
 	 */
 	public function registrationMark($x, $y, $r, $double=false, $cola=array(100,100,100,100,'All'), $colb=array(0,0,0,0,'None')) {
-		$line_style = array('width' => max((0.5 / $this->k),($r / 30)), 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $cola);
+		$line_style = array('width' => max((0.5 / $this->k),($r / 30)), 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => $cola);
 		$this->SetFillColorArray($cola);
 		$this->PieSector($x, $y, $r, 90, 180, 'F');
 		$this->PieSector($x, $y, $r, 270, 360, 'F');
@@ -14343,7 +14348,7 @@ class TCPDF {
 		$this->SetFillColorArray(array(0,0,0,100));
 		$this->PieSector($x, $y, $ri, 180, 270, 'F');
 		// registration color
-		$line_style = array('width' => $lw, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(100,100,100,100,'All'));
+		$line_style = array('width' => $lw, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(100,100,100,100,'All'));
 		$this->SetFillColorArray(array(100,100,100,100,'All'));
 		// external circle
 		$this->Circle($x, $y, $r, 0, 360, 'C', $line_style, array(), 8);
@@ -14369,7 +14374,7 @@ class TCPDF {
 	 */
 	public function LinearGradient($x, $y, $w, $h, $col1=array(), $col2=array(), $coords=array(0,0,1,0)) {
 		$this->Clip($x, $y, $w, $h);
-		$this->Gradient(2, $coords, array(array('color' => $col1, 'offset' => 0, 'exponent' => 1), array('color' => $col2, 'offset' => 1, 'exponent' => 1)), array(), false);
+		$this->Gradient(2, $coords, array(array(DORA4 => $col1, 'offset' => 0, 'exponent' => 1), array(DORA4 => $col2, 'offset' => 1, 'exponent' => 1)), array(), false);
 	}
 
 	/**
@@ -14387,7 +14392,7 @@ class TCPDF {
 	 */
 	public function RadialGradient($x, $y, $w, $h, $col1=array(), $col2=array(), $coords=array(0.5,0.5,0.5,0.5,1)) {
 		$this->Clip($x, $y, $w, $h);
-		$this->Gradient(3, $coords, array(array('color' => $col1, 'offset' => 0, 'exponent' => 1), array('color' => $col2, 'offset' => 1, 'exponent' => 1)), array(), false);
+		$this->Gradient(3, $coords, array(array(DORA4 => $col1, 'offset' => 0, 'exponent' => 1), array(DORA4 => $col2, 'offset' => 1, 'exponent' => 1)), array(), false);
 	}
 
 	/**
@@ -14539,7 +14544,7 @@ class TCPDF {
 		$this->gradients[$n]['colors'] = array();
 		$this->gradients[$n]['transparency'] = false;
 		// color space
-		$numcolspace = count($stops[0]['color']);
+		$numcolspace = count($stops[0][DORA4]);
 		$bcolor = array_values($background);
 		switch($numcolspace) {
 			case 5:   // SPOT
@@ -14582,13 +14587,13 @@ class TCPDF {
 					$this->gradients[$n]['colors'][$key]['offset'] = $this->gradients[$n]['colors'][($key - 1)]['offset'] + $offsetstep;
 				}
 			}
-			if (isset($stop['opacity'])) {
-				$this->gradients[$n]['colors'][$key]['opacity'] = $stop['opacity'];
-				if ((!$this->pdfa_mode) AND ($stop['opacity'] < 1)) {
+			if (isset($stop[DORA])) {
+				$this->gradients[$n]['colors'][$key][DORA] = $stop[DORA];
+				if ((!$this->pdfa_mode) AND ($stop[DORA] < 1)) {
 					$this->gradients[$n]['transparency'] = true;
 				}
 			} else {
-				$this->gradients[$n]['colors'][$key]['opacity'] = 1;
+				$this->gradients[$n]['colors'][$key][DORA] = 1;
 			}
 			// exponent for the exponential interpolation function
 			if (isset($stop['exponent'])) {
@@ -14597,19 +14602,19 @@ class TCPDF {
 				$this->gradients[$n]['colors'][$key]['exponent'] = 1;
 			}
 			// set colors
-			$color = array_values($stop['color']);
+			$color = array_values($stop[DORA4]);
 			switch($numcolspace) {
 				case 5:   // SPOT
 				case 4: { // CMYK
-					$this->gradients[$n]['colors'][$key]['color'] = sprintf('%F %F %F %F', $color[0]/100, $color[1]/100, $color[2]/100, $color[3]/100);
+					$this->gradients[$n]['colors'][$key][DORA4] = sprintf('%F %F %F %F', $color[0]/100, $color[1]/100, $color[2]/100, $color[3]/100);
 					break;
 				}
 				case 3: { // RGB
-					$this->gradients[$n]['colors'][$key]['color'] = sprintf('%F %F %F', $color[0]/255, $color[1]/255, $color[2]/255);
+					$this->gradients[$n]['colors'][$key][DORA4] = sprintf('%F %F %F', $color[0]/255, $color[1]/255, $color[2]/255);
 					break;
 				}
 				case 1: { // GRAY SCALE
-					$this->gradients[$n]['colors'][$key]['color'] = sprintf('%F', $color[0]/255);
+					$this->gradients[$n]['colors'][$key][DORA4] = sprintf('%F', $color[0]/255);
 					break;
 				}
 			}
@@ -14669,8 +14674,8 @@ class TCPDF {
 					$out = '<<';
 					$out .= ' /FunctionType 2';
 					$out .= ' /Domain [0 1]';
-					$out .= ' /C0 ['.$grad['colors'][($i - 1)]['color'].']';
-					$out .= ' /C1 ['.$grad['colors'][$i]['color'].']';
+					$out .= ' /C0 ['.$grad['colors'][($i - 1)][DORA4].']';
+					$out .= ' /C1 ['.$grad['colors'][$i][DORA4].']';
 					$out .= ' /N '.$grad['colors'][$i]['exponent'];
 					$out .= ' >>';
 					$out .= "\n".'endobj';
@@ -14699,8 +14704,8 @@ class TCPDF {
 						$out = '<<';
 						$out .= ' /FunctionType 2';
 						$out .= ' /Domain [0 1]';
-						$out .= ' /C0 ['.$grad['colors'][($i - 1)]['opacity'].']';
-						$out .= ' /C1 ['.$grad['colors'][$i]['opacity'].']';
+						$out .= ' /C0 ['.$grad['colors'][($i - 1)][DORA].']';
+						$out .= ' /C1 ['.$grad['colors'][$i][DORA].']';
 						$out .= ' /N '.$grad['colors'][$i]['exponent'];
 						$out .= ' >>';
 						$out .= "\n".'endobj';
@@ -14884,7 +14889,7 @@ class TCPDF {
 	 * @param $useBoundingBox (boolean) specifies whether to position the bounding box (true) or the complete canvas (false) at location (x,y). Default value is true.
 	 * @param $align (string) Indicates the alignment of the pointer next to image insertion relative to image height. The value can be:<ul><li>T: top-right for LTR or top-left for RTL</li><li>M: middle-right for LTR or middle-left for RTL</li><li>B: bottom-right for LTR or bottom-left for RTL</li><li>N: next line</li></ul>
 	 * @param $palign (string) Allows to center or align the image on the current line. Possible values are:<ul><li>L : left align</li><li>C : center</li><li>R : right align</li><li>'' : empty string : left for LTR or right for RTL</li></ul>
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(0, 0, 0)))
 	 * @param $fitonpage (boolean) if true the image is resized to not exceed page dimensions.
 	 * @param $fixoutvals (boolean) if true remove values outside the bounding box.
 	 * @author Valentin Schmidt, Nicola Asuni
@@ -15994,7 +15999,7 @@ class TCPDF {
 			return array();
 		}
 		$border['width'] = $this->getCSSBorderWidth($width);
-		$border['color'] = TCPDF_COLORS::convertHTMLColorToDec($color, $this->spot_colors);
+		$border[DORA4] = TCPDF_COLORS::convertHTMLColorToDec($color, $this->spot_colors);
 		return $border;
 	}
 
@@ -16711,8 +16716,8 @@ class TCPDF {
 							$dom[$key]['fontstyle'] .= 'I';
 						}
 						// font color
-						if (isset($dom[$key]['style']['color']) AND (!TCPDF_STATIC::empty_string($dom[$key]['style']['color']))) {
-							$dom[$key]['fgcolor'] = TCPDF_COLORS::convertHTMLColorToDec($dom[$key]['style']['color'], $this->spot_colors);
+						if (isset($dom[$key]['style'][DORA4]) AND (!TCPDF_STATIC::empty_string($dom[$key]['style'][DORA4]))) {
+							$dom[$key]['fgcolor'] = TCPDF_COLORS::convertHTMLColorToDec($dom[$key]['style'][DORA4], $this->spot_colors);
 						} elseif ($dom[$key]['value'] == 'a') {
 							$dom[$key]['fgcolor'] = $this->htmlLinkColorArray;
 						}
@@ -16763,16 +16768,16 @@ class TCPDF {
 						if (isset($dom[$key]['style']['border-color'])) {
 							$brd_colors = preg_split('/[\s]+/', trim($dom[$key]['style']['border-color']));
 							if (isset($brd_colors[3])) {
-								$dom[$key]['border']['L']['color'] = TCPDF_COLORS::convertHTMLColorToDec($brd_colors[3], $this->spot_colors);
+								$dom[$key]['border']['L'][DORA4] = TCPDF_COLORS::convertHTMLColorToDec($brd_colors[3], $this->spot_colors);
 							}
 							if (isset($brd_colors[1])) {
-								$dom[$key]['border']['R']['color'] = TCPDF_COLORS::convertHTMLColorToDec($brd_colors[1], $this->spot_colors);
+								$dom[$key]['border']['R'][DORA4] = TCPDF_COLORS::convertHTMLColorToDec($brd_colors[1], $this->spot_colors);
 							}
 							if (isset($brd_colors[0])) {
-								$dom[$key]['border']['T']['color'] = TCPDF_COLORS::convertHTMLColorToDec($brd_colors[0], $this->spot_colors);
+								$dom[$key]['border']['T'][DORA4] = TCPDF_COLORS::convertHTMLColorToDec($brd_colors[0], $this->spot_colors);
 							}
 							if (isset($brd_colors[2])) {
-								$dom[$key]['border']['B']['color'] = TCPDF_COLORS::convertHTMLColorToDec($brd_colors[2], $this->spot_colors);
+								$dom[$key]['border']['B'][DORA4] = TCPDF_COLORS::convertHTMLColorToDec($brd_colors[2], $this->spot_colors);
 							}
 						}
 						if (isset($dom[$key]['style']['border-width'])) {
@@ -16834,7 +16839,7 @@ class TCPDF {
 								}
 							}
 							if (isset($dom[$key]['style']['border-'.$bsv.'-color'])) {
-								$dom[$key]['border'][$bsk]['color'] = TCPDF_COLORS::convertHTMLColorToDec($dom[$key]['style']['border-'.$bsv.'-color'], $this->spot_colors);
+								$dom[$key]['border'][$bsk][DORA4] = TCPDF_COLORS::convertHTMLColorToDec($dom[$key]['style']['border-'.$bsv.'-color'], $this->spot_colors);
 							}
 							if (isset($dom[$key]['style']['border-'.$bsv.'-width'])) {
 								$dom[$key]['border'][$bsk]['width'] = $this->getCSSBorderWidth($dom[$key]['style']['border-'.$bsv.'-width']);
@@ -17001,9 +17006,9 @@ class TCPDF {
 						$dom[$key]['dir'] = $dom[$key]['attribute']['dir'];
 					}
 					// set foreground color attribute
-					if (isset($dom[$key]['attribute']['color']) AND (!TCPDF_STATIC::empty_string($dom[$key]['attribute']['color']))) {
-						$dom[$key]['fgcolor'] = TCPDF_COLORS::convertHTMLColorToDec($dom[$key]['attribute']['color'], $this->spot_colors);
-					} elseif (!isset($dom[$key]['style']['color']) AND ($dom[$key]['value'] == 'a')) {
+					if (isset($dom[$key]['attribute'][DORA4]) AND (!TCPDF_STATIC::empty_string($dom[$key]['attribute'][DORA4]))) {
+						$dom[$key]['fgcolor'] = TCPDF_COLORS::convertHTMLColorToDec($dom[$key]['attribute'][DORA4], $this->spot_colors);
+					} elseif (!isset($dom[$key]['style'][DORA4]) AND ($dom[$key]['value'] == 'a')) {
 						$dom[$key]['fgcolor'] = $this->htmlLinkColorArray;
 					}
 					// set background color attribute
@@ -17149,7 +17154,7 @@ class TCPDF {
 	 * @param $x (float) upper-left corner X coordinate
 	 * @param $y (float) upper-left corner Y coordinate
 	 * @param $html (string) html text to print. Default value: empty string.
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(0, 0, 0)))
 	 * @param $ln (int) Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right (or left for RTL language)</li><li>1: to the beginning of the next line</li><li>2: below</li></ul>
 Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value: 0.
 	 * @param $fill (boolean) Indicates if the cell background must be painted (true) or transparent (false).
@@ -19575,7 +19580,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 				// set default border
 				if (isset($table_el['attribute']['border']) AND ($table_el['attribute']['border'] > 0)) {
 					// set default border
-					$border = array('LTRB' => array('width' => $this->getCSSBorderWidth($table_el['attribute']['border']), 'cap'=>'square', 'join'=>'miter', 'dash'=> 0, 'color'=>array(0,0,0)));
+					$border = array('LTRB' => array('width' => $this->getCSSBorderWidth($table_el['attribute']['border']), 'cap'=>'square', 'join'=>'miter', 'dash'=> 0, DORA4=>array(0,0,0)));
 				} else {
 					$border = 0;
 				}
@@ -20478,7 +20483,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					$this->x -= $lspace;
 				}
 				$prev_line_style = $this->linestyleWidth.' '.$this->linestyleCap.' '.$this->linestyleJoin.' '.$this->linestyleDash.' '.$this->DrawColor;
-				$new_line_style = array('width' => ($r / 3), 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'phase' => 0, 'color'=>$color);
+				$new_line_style = array('width' => ($r / 3), 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'phase' => 0, DORA4=>$color);
 				$this->Circle(($this->x + $r), ($this->y + ($this->lasth / 2)), ($r * (1 - (1/6))), 0, 360, 'D', $new_line_style, array(), 8);
 				$this->_out($prev_line_style); // restore line settings
 				break;
@@ -21983,39 +21988,39 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	 * @since 5.9.174 (2012-07-25)
 	 * @public
 	*/
-	public function setTextShadow($params=array('enabled'=>false, 'depth_w'=>0, 'depth_h'=>0, 'color'=>false, 'opacity'=>1, 'blend_mode'=>'Normal')) {
-		if (isset($params['enabled'])) {
-			$this->txtshadow['enabled'] = $params['enabled']?true:false;
+	public function setTextShadow($params=array(DORA1=>false, DORA2=>0, DORA3=>0, DORA4=>false, DORA=>1, DORA5=>'Normal')) {
+		if (isset($params[DORA1])) {
+			$this->txtshadow[DORA1] = $params[DORA1]?true:false;
 		} else {
-			$this->txtshadow['enabled'] = false;
+			$this->txtshadow[DORA1] = false;
 		}
-		if (isset($params['depth_w'])) {
-			$this->txtshadow['depth_w'] = floatval($params['depth_w']);
+		if (isset($params[DORA2])) {
+			$this->txtshadow[DORA2] = floatval($params[DORA2]);
 		} else {
-			$this->txtshadow['depth_w'] = 0;
+			$this->txtshadow[DORA2] = 0;
 		}
-		if (isset($params['depth_h'])) {
-			$this->txtshadow['depth_h'] = floatval($params['depth_h']);
+		if (isset($params[DORA3])) {
+			$this->txtshadow[DORA3] = floatval($params[DORA3]);
 		} else {
-			$this->txtshadow['depth_h'] = 0;
+			$this->txtshadow[DORA3] = 0;
 		}
-		if (isset($params['color']) AND ($params['color'] !== false) AND is_array($params['color'])) {
-			$this->txtshadow['color'] = $params['color'];
+		if (isset($params[DORA4]) AND ($params[DORA4] !== false) AND is_array($params[DORA4])) {
+			$this->txtshadow[DORA4] = $params[DORA4];
 		} else {
-			$this->txtshadow['color'] = $this->strokecolor;
+			$this->txtshadow[DORA4] = $this->strokecolor;
 		}
-		if (isset($params['opacity'])) {
-			$this->txtshadow['opacity'] = min(1, max(0, floatval($params['opacity'])));
+		if (isset($params[DORA])) {
+			$this->txtshadow[DORA] = min(1, max(0, floatval($params[DORA])));
 		} else {
-			$this->txtshadow['opacity'] = 1;
+			$this->txtshadow[DORA] = 1;
 		}
-		if (isset($params['blend_mode']) AND in_array($params['blend_mode'], array('Normal', 'Multiply', 'Screen', 'Overlay', 'Darken', 'Lighten', 'ColorDodge', 'ColorBurn', 'HardLight', 'SoftLight', 'Difference', 'Exclusion', 'Hue', 'Saturation', 'Color', 'Luminosity'))) {
-			$this->txtshadow['blend_mode'] = $params['blend_mode'];
+		if (isset($params[DORA5]) AND in_array($params[DORA5], array('Normal', 'Multiply', 'Screen', 'Overlay', 'Darken', 'Lighten', 'ColorDodge', 'ColorBurn', 'HardLight', 'SoftLight', 'Difference', 'Exclusion', 'Hue', 'Saturation', DORA4, 'Luminosity'))) {
+			$this->txtshadow[DORA5] = $params[DORA5];
 		} else {
-			$this->txtshadow['blend_mode'] = 'Normal';
+			$this->txtshadow[DORA5] = 'Normal';
 		}
-		if ((($this->txtshadow['depth_w'] == 0) AND ($this->txtshadow['depth_h'] == 0)) OR ($this->txtshadow['opacity'] == 0)) {
-			$this->txtshadow['enabled'] = false;
+		if ((($this->txtshadow[DORA2] == 0) AND ($this->txtshadow[DORA3] == 0)) OR ($this->txtshadow[DORA] == 0)) {
+			$this->txtshadow[DORA1] = false;
 		}
 	}
 
@@ -22762,7 +22767,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	 * @param $link (mixed) URL or identifier returned by AddLink().
 	 * @param $align (string) Indicates the alignment of the pointer next to image insertion relative to image height. The value can be:<ul><li>T: top-right for LTR or top-left for RTL</li><li>M: middle-right for LTR or middle-left for RTL</li><li>B: bottom-right for LTR or bottom-left for RTL</li><li>N: next line</li></ul> If the alignment is an empty string, then the pointer will be restored on the starting SVG position.
 	 * @param $palign (string) Allows to center or align the image on the current line. Possible values are:<ul><li>L : left align</li><li>C : center</li><li>R : right align</li><li>'' : empty string : left for LTR or right for RTL</li></ul>
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, DORA4 => array(0, 0, 0)))
 	 * @param $fitonpage (boolean) if true the image is resized to not exceed page dimensions.
 	 * @author Nicola Asuni
 	 * @since 5.0.000 (2010-05-02)
@@ -23134,7 +23139,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		}
 		$objstyle = '';
 		$minlen = (0.01 / $this->k); // minimum acceptable length
-		if (!isset($svgstyle['opacity'])) {
+		if (!isset($svgstyle[DORA])) {
 			return $objstyle;
 		}
 		// clip-path
@@ -23146,11 +23151,11 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 			}
 		}
 		// opacity
-		if ($svgstyle['opacity'] != 1) {
-			$this->setAlpha($svgstyle['opacity'], 'Normal', $svgstyle['opacity'], false);
+		if ($svgstyle[DORA] != 1) {
+			$this->setAlpha($svgstyle[DORA], 'Normal', $svgstyle[DORA], false);
 		}
 		// color
-		$fill_color = TCPDF_COLORS::convertHTMLColorToDec($svgstyle['color'], $this->spot_colors);
+		$fill_color = TCPDF_COLORS::convertHTMLColorToDec($svgstyle[DORA4], $this->spot_colors);
 		$this->SetFillColorArray($fill_color);
 		// text color
 		$text_color = TCPDF_COLORS::convertHTMLColorToDec($svgstyle['text-color'], $this->spot_colors);
@@ -23296,7 +23301,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 				$this->setAlpha($rgba_matches[1], 'Normal', $this->alpha['ca'], false);
 			}
 			$stroke_style = array(
-				'color' => TCPDF_COLORS::convertHTMLColorToDec($svgstyle['stroke'], $this->spot_colors),
+				DORA4 => TCPDF_COLORS::convertHTMLColorToDec($svgstyle['stroke'], $this->spot_colors),
 				'width' => $this->getHTMLUnitToUnits($svgstyle['stroke-width'], 0, $this->svgunit, false),
 				'cap' => $svgstyle['stroke-linecap'],
 				'join' => $svgstyle['stroke-linejoin']
@@ -24080,7 +24085,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 				}
 				$stop_color = isset($svgstyle['stop-color'])?TCPDF_COLORS::convertHTMLColorToDec($svgstyle['stop-color'], $this->spot_colors):'black';
 				$opacity = isset($svgstyle['stop-opacity'])?$svgstyle['stop-opacity']:1;
-				$this->svggradients[$this->svggradientid]['stops'][] = array('offset' => $offset, 'color' => $stop_color, 'opacity' => $opacity);
+				$this->svggradients[$this->svggradientid]['stops'][] = array('offset' => $offset, DORA4 => $stop_color, DORA => $opacity);
 				break;
 			}
 			// paths
