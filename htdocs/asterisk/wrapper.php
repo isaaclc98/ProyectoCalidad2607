@@ -44,7 +44,7 @@ if (! defined('NOREQUIREAJAX'))   define('NOREQUIREAJAX', '1');
  */
 function llxHeader()
 {
-    print '<html>'."\n";
+    print '<html lang="en">'."\n";
     print '<head>'."\n";
     print '<title>Asterisk redirection from Dolibarr...</title>'."\n";
     print '</head>'."\n";

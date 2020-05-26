@@ -68,7 +68,7 @@ if (! $result)
 
 header("Content-type: text/html; charset=utf8");
 print '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">'."\n";
-echo '<html>'."\n";
+echo '<html lang="en">'."\n";
 echo '<head>';
 echo '<title>WebService Test: '.$WS_METHOD.'</title>';
 echo '</head>'."\n";

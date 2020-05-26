@@ -971,9 +971,9 @@ class CMailFile
 	 */
 	public function checkIfHTML($msg)
 	{
-		if (!preg_match('/^[\s\t]*<html/i', $msg))
+		if (!preg_match('/^[\s\t]*<html lang="en"/i', $msg))
 		{
-			$out = "<html><head><title></title>";
+			$out = "<html lang="en"><head><title></title>";
 			if (!empty($this->styleCSS)) $out .= $this->styleCSS;
 			$out .= "</head><body";
 			if (!empty($this->bodyCSS)) $out .= $this->bodyCSS;

@@ -7,7 +7,7 @@ Content-Type: multipart/related; boundary="de50511a21aa12aa7e67f9606279f097"
 --de50511a21aa12aa7e67f9606279f097
 Content-Type: text/html; charset=UTF-8
 
-<html><head><title></title></head><body><img height="604" width="475" src="cid:1c184fb7828cd6c1cdb1606d3946f6a4" alt="" /></body></html>
+<html lang="en"><head><title></title></head><body><img height="604" width="475" src="cid:1c184fb7828cd6c1cdb1606d3946f6a4" alt="" /></body></html>
 --de50511a21aa12aa7e67f9606279f097
 --de50511a21aa12aa7e67f9606279f097
 Content-Type: image/jpeg; name="image.jpg"

@@ -33,7 +33,7 @@ define("NOCSRFCHECK", 1);	// We accept to go on this page from external web site
  */
 function llxHeaderVierge()
 {
-    print '<html><title>Export agenda cal</title><body>';
+    print '<html lang="en"><title>Export agenda cal</title><body>';
 }
 /**
  * Header function

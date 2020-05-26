@@ -46,7 +46,7 @@ require '../../../../main.inc.php';
  *
  * This page shows the actual folder path.
 -->
-<html>
+<html lang="en">
 	<head>
 		<title>Folder path</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">

@@ -101,7 +101,7 @@ if ($resql) {
 			$errorsto = $emailing->email_errorsto;
 			// Le message est-il en html
 			$msgishtml = - 1; // Unknown by default
-			if (preg_match('/[\s\t]*<html>/i', $message))
+			if (preg_match('/[\s\t]*<html lang="en">/i', $message))
 				$msgishtml = 1;
 
 			$nbok = 0;

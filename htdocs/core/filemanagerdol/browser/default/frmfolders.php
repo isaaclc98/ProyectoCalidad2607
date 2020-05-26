@@ -51,7 +51,7 @@ require '../../../../main.inc.php';
 //$arrayofjs=array('js/common.js');
 //echo top_htmlhead($head, $title, $disablejs, $disablehead, $arrayofjs, $arrayofcss);	// Show html headers
 ?>
-<html>
+<html lang="en">
 	<head>
 		<title>Folders</title>
 		<link href="browser.css" type="text/css" rel="stylesheet">

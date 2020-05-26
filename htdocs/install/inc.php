@@ -376,7 +376,7 @@ function pHeader($subtitle, $next, $action = 'set', $param = '', $forcejqueryurl
     header("X-Content-Type-Options: nosniff");
 
     print '<!DOCTYPE HTML>'."\n";
-    print '<html>'."\n";
+    print '<html lang="en">'."\n";
     print '<head>'."\n";
     print '<meta charset="'.$conf->file->character_set_client.'">'."\n";
     print '<meta name="viewport" content="width=device-width, initial-scale=1.0">'."\n";

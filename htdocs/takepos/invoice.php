@@ -396,7 +396,7 @@ if ($action == "order" and $placeid != 0)
 {
     include_once DOL_DOCUMENT_ROOT.'/categories/class/categorie.class.php';
 
-    $headerorder = '<html><br><b>'.$langs->trans('Place').' '.$place.'<br><table width="65%"><thead><tr><th class="left">'.$langs->trans("Label").'</th><th class="right">'.$langs->trans("Qty").'</th></tr></thead><tbody>';
+    $headerorder = '<html lang="en"><br><b>'.$langs->trans('Place').' '.$place.'<br><table width="65%"><thead><tr><th class="left">'.$langs->trans("Label").'</th><th class="right">'.$langs->trans("Qty").'</th></tr></thead><tbody>';
     $footerorder = '</tbody></table>'.dol_print_date(dol_now(), 'dayhour').'<br></html>';
     $order_receipt_printer1 = "";
     $order_receipt_printer2 = "";

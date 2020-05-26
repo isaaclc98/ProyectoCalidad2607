@@ -476,16 +476,16 @@ snippet hgroup.\n\
 snippet hr\n\
 	<hr />${1}\n\
 snippet html\n\
-	<html>\n\
+	<html lang="en">\n\
 	${1}\n\
 	</html>\n\
 snippet xhtml\n\
-	<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\
+	<html lang="en" xmlns=\"http://www.w3.org/1999/xhtml\">\n\
 	${1}\n\
 	</html>\n\
 snippet html5\n\
 	<!DOCTYPE html>\n\
-	<html>\n\
+	<html lang="en">\n\
 		<head>\n\
 			<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />\n\
 			<title>${1:`substitute(Filename('', 'Page Title'), '^.', '\\u&', '')`}</title>\n\
@@ -497,7 +497,7 @@ snippet html5\n\
 	</html>\n\
 snippet xhtml5\n\
 	<!DOCTYPE html>\n\
-	<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\
+	<html lang="en" xmlns=\"http://www.w3.org/1999/xhtml\">\n\
 		<head>\n\
 			<meta http-equiv=\"content-type\" content=\"application/xhtml+xml; charset=utf-8\" />\n\
 			<title>${1:`substitute(Filename('', 'Page Title'), '^.', '\\u&', '')`}</title>\n\

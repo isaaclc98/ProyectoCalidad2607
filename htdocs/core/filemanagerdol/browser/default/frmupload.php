@@ -46,7 +46,7 @@ require '../../../../main.inc.php';
  *
  * Page used to upload new files in the current folder.
 -->
-<html>
+<html lang="en">
 	<head>
 		<title>File Upload</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">

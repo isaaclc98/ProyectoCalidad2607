@@ -54,7 +54,7 @@ $left=($langs->trans("DIRECTION")=='rtl'?'right':'left');
 
 // URL http://mydolibarr/core/datepicker.php?mode=test&m=10&y=2038 can be used for tests
 print '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">'."\n";
-print '<html>'."\n";
+print '<html lang="en">'."\n";
 print '<head>'."\n";
 if (GETPOST('mode') && GETPOST('mode') == 'test')
 {

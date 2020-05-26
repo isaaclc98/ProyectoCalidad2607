@@ -608,7 +608,7 @@ class WebsitePage extends CommonObject
 		$this->image = '';
 		$this->keywords = 'keyword1, keyword2';
 		$this->htmlheader = '';
-		$this->content = '<html><body>This is a html content</body></html>';
+		$this->content = '<html lang="en"><body>This is a html content</body></html>';
 		$this->status = '';
 		$this->grabbed_from = '';
 		$this->date_creation = $now - (24 * 30 * 3600);

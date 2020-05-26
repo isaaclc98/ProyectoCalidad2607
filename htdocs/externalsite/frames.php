@@ -78,7 +78,7 @@ if (! empty($keyforcontent))
 		elseif (preg_match('/EXTERNAL_SITE_URL_/', $keyforcontent))
 		{
 			/*print "
-			<html>
+			<html lang="en">
 			<head>
 			<title>Dolibarr frame for external web site</title>
 			</head>
@@ -120,7 +120,7 @@ else
 	if (preg_match('/^\//', $conf->global->EXTERNALSITE_URL) || preg_match('/^http/i', $conf->global->EXTERNALSITE_URL))
 	{
 		print "
-	<html>
+	<html lang="en">
 	<head>
 	<title>Dolibarr frame for external web site</title>
 	</head>

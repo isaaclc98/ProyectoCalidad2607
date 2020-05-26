@@ -29,7 +29,7 @@
  */
 function llxHeader()
 {
-    print '<html><title>Build an import example file</title><body>';
+    print '<html lang="en"><title>Build an import example file</title><body>';
 }
 
 /**

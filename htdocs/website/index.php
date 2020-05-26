@@ -909,7 +909,7 @@ if ($action == 'addcontainer')
 
 		if (!dol_is_file($filehtmlheader))
 		{
-			$htmlheadercontent = "<html>\n";
+			$htmlheadercontent = "<html lang="en">\n";
 			$htmlheadercontent .= $htmlheadercontentdefault;
 			$htmlheadercontent .= "</html>";
 			$result = dolSaveHtmlHeader($filehtmlheader, $htmlheadercontent);
@@ -2611,7 +2611,7 @@ if ($action == 'editcss')
 	}
 	if (!trim($htmlheadercontent))
 	{
-		$htmlheadercontent = "<html>\n";
+		$htmlheadercontent = "<html lang="en">\n";
 		$htmlheadercontent .= $htmlheadercontentdefault;
 		$htmlheadercontent .= "</html>";
 	}
@@ -3476,7 +3476,7 @@ if ($action == 'preview' || $action == 'createfromclone' || $action == 'createpa
 		{
 			$out .= "<iframe><body></html>";
 		}*/
-		$out .= "\n<html><head>\n";
+		$out .= "\n<html lang="en"><head>\n";
 		$out .= "<!-- htmlheader/style of page from database -->\n";
 		$out .= dolWebsiteReplacementOfLinks($object, $objectpage->htmlheader, 1, 'htmlheader');
 

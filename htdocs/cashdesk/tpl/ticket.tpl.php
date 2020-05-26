@@ -37,7 +37,7 @@ $object=new Facture($db);
 $object->fetch($facid);
 
 ?>
-<html>
+<html lang="en">
     <head>
     <title><?php echo $langs->trans('PrintTicket') ?></title>
     <link rel="stylesheet" type="text/css" href="<?php echo DOL_URL_ROOT;?>/cashdesk/css/ticket.css">

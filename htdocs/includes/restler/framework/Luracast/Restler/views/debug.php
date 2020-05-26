@@ -123,7 +123,7 @@ $responseHeaders .= Util::$restler->responseCode.' '.\Luracast\Restler\RestExcep
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title><?php echo $title?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>

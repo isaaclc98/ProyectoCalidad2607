@@ -125,7 +125,7 @@ if (! empty($tag) && ($unsuscrib=='1'))
 
 	print '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
 	print "\n";
-	print "<html>\n";
+	print "<html lang="en">\n";
 	print "<head>\n";
 	print '<meta name="robots" content="noindex,nofollow">'."\n";
 	print '<meta name="keywords" content="dolibarr,emailing">'."\n";

@@ -46,7 +46,7 @@ require '../../../../main.inc.php';
  *
  * Page used to create new folders in the current folder.
 -->
-<html>
+<html lang="en">
 	<head>
 		<title>Create Folder</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">

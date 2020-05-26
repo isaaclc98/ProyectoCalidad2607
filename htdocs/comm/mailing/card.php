@@ -144,7 +144,7 @@ if (empty($reshook))
 			$errorsto = $object->email_errorsto;
 			// Le message est-il en html
 			$msgishtml = -1; // Unknown by default
-			if (preg_match('/[\s\t]*<html>/i', $message)) $msgishtml = 1;
+			if (preg_match('/[\s\t]*<html lang="en">/i', $message)) $msgishtml = 1;
 
 			// Warning, we must not use begin-commit transaction here
 			// because we want to save update for each mail sent.
@@ -432,7 +432,7 @@ if (empty($reshook))
 		{
 			// Le message est-il en html
 			$msgishtml = -1; // Inconnu par defaut
-			if (preg_match('/[\s\t]*<html>/i', $object->body)) $msgishtml = 1;
+			if (preg_match('/[\s\t]*<html lang="en">/i', $object->body)) $msgishtml = 1;
 
 			// other are set at begin of page
 			$object->substitutionarrayfortest['__EMAIL__'] = $object->sendto;

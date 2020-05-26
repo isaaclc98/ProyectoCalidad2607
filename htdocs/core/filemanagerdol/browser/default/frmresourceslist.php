@@ -46,7 +46,7 @@ require '../../../../main.inc.php';
  *
  * This page shows all resources available in a folder in the File Browser.
 -->
-<html>
+<html lang="en">
 <head>
 	<title>Resources</title>
 	<link href="browser.css" type="text/css" rel="stylesheet">

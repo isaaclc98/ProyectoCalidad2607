@@ -2,5 +2,5 @@ projectKey=ProyectoCalidad
 serverUrl=http://localhost:9000
 serverVersion=8.2.0.32929
 dashboardUrl=http://localhost:9000/dashboard?id=ProyectoCalidad
-ceTaskId=AXI53RlQStDIIYa0wcGQ
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AXI53RlQStDIIYa0wcGQ
+ceTaskId=AXJPDZrlD-h6ngEp_p7S
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXJPDZrlD-h6ngEp_p7S

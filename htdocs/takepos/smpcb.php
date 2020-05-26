@@ -6,7 +6,7 @@ if (isset($_GET['status'])) {
 }
 
 if ($_GET['smp-status']) {
-	print '<html lang="en">
+	print '<html lang="en" lang="en">
 <head>
     <meta charset="utf-8">
 

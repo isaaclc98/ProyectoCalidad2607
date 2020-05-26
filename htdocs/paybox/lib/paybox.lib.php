@@ -157,7 +157,7 @@ function print_paybox_redirect($PRICE, $CURRENCY, $EMAIL, $urlok, $urlko, $TAG)
     header("Content-type: text/html; charset=".$conf->file->character_set_client);
     header("X-Content-Type-Options: nosniff");
 
-    print '<html>'."\n";
+    print '<html lang="en">'."\n";
     print '<head>'."\n";
     print "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=".$conf->file->character_set_client."\">\n";
     print '</head>'."\n";

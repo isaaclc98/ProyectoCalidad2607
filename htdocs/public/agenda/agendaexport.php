@@ -44,7 +44,7 @@ if (! defined('NOCSRFCHECK'))    define("NOCSRFCHECK", 1);	// We accept to go on
  */
 function llxHeaderVierge()
 {
-    print '<html><title>Export agenda cal</title><body>';
+    print '<html lang="en"><title>Export agenda cal</title><body>';
 }
 /**
  * Footer function

@@ -8,7 +8,7 @@ X-attachments: images.jpg
 --de50511a21aa12aa7e67f9606279f097
 Content-Type: text/html; charset=UTF-8
 
-<html><head><title></title></head><body>Te<strong>s</strong>t&eacute;&eacute;</body></html>
+<html lang="en"><head><title></title></head><body>Te<strong>s</strong>t&eacute;&eacute;</body></html>
 --de50511a21aa12aa7e67f9606279f097
 Content-Type: image/jpeg; name="images.jpg"
 Content-Transfer-Encoding: base64
