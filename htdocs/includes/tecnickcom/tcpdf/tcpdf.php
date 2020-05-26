@@ -776,7 +776,9 @@ class TCPDF {
 	 * @protected
 	 * @since 1.53.0.TC010
 	 */
-	protected $encoding = 'UTF-8';
+
+	HOLA='UTF-8';
+	protected $encoding = HOLA;
 
 	/**
 	 * PHP internal encoding.
@@ -1315,7 +1317,9 @@ class TCPDF {
 	 * @protected
 	 * @since 5.5.011 (2010-07-09)
 	 */
-	protected $re_space = array('p' => '[^\S\xa0]', 'm' => '');
+
+	HOLA2='[^\S\xa0]';
+	protected $re_space = array('p' => HOLA2, 'm' => '');
 
 	/**
 	 * Digital signature object ID.
@@ -1343,7 +1347,13 @@ class TCPDF {
 	 * @protected
 	 * @since 4.8.000 (2009-09-07)
 	 */
-	protected $default_form_prop = array('lineWidth'=>1, 'borderStyle'=>'solid', 'fillColor'=>array(255, 255, 255), 'strokeColor'=>array(128, 128, 128));
+
+	HOLA3='lineWidth';
+	HOLA4='borderStyle';
+	HOLA5='solid';
+	HOLA6='fillColor';
+	HOLA7='strokeColor';
+	protected $default_form_prop = array(HOLA3=>1, HOLA4=>HOLA5, HOLA6=>array(255, 255, 255), HOLA7=>array(128, 128, 128));
 
 	/**
 	 * Javascript objects array.
@@ -1857,7 +1867,7 @@ class TCPDF {
 	 * @public
 	 * @see getPageSizeFromFormat(), setPageFormat()
 	 */
-	public function __construct($orientation='P', $unit='mm', $format='A4', $unicode=true, $encoding='UTF-8', $diskcache=false, $pdfa=false) {
+	public function __construct($orientation='P', $unit='mm', $format='A4', $unicode=true, $encoding=HOLA, $diskcache=false, $pdfa=false) {
 		/* Set internal character encoding to ASCII */
 		if (function_exists('mb_internal_encoding') AND mb_internal_encoding()) {
 			$this->internal_encoding = mb_internal_encoding();
@@ -2003,7 +2013,7 @@ class TCPDF {
 			// PCRE unicode support is turned OFF
 			$this->setSpacesRE('/[^\S\xa0]/');
 		}
-		$this->default_form_prop = array('lineWidth'=>1, 'borderStyle'=>'solid', 'fillColor'=>array(255, 255, 255), 'strokeColor'=>array(128, 128, 128));
+		$this->default_form_prop = array(HOLA3=>1, HOLA4=>HOLA5, HOLA6=>array(255, 255, 255), 'strokeColor'=>array(128, 128, 128));
 		// set document creation and modification timestamp
 		$this->doc_creation_timestamp = time();
 		$this->doc_modification_timestamp = $this->doc_creation_timestamp;
@@ -12874,7 +12884,7 @@ class TCPDF {
 		$prop = array_merge($this->getFormDefaultProp(), $prop);
 		$prop['NoToggleToOff'] = 'true';
 		$prop['Radio'] = 'true';
-		$prop['borderStyle'] = 'inset';
+		$prop[HOLA4] = 'inset';
 		// get annotation data
 		$popt = TCPDF_STATIC::getAnnotOptFromJSProp($prop, $this->spot_colors, $this->rtl);
 		// set additional default options
@@ -13122,7 +13132,7 @@ class TCPDF {
 		}
 		// get default style
 		$prop = array_merge($this->getFormDefaultProp(), $prop);
-		$prop['borderStyle'] = 'inset';
+		$prop[HOLA4] = 'inset';
 		// get annotation data
 		$popt = TCPDF_STATIC::getAnnotOptFromJSProp($prop, $this->spot_colors, $this->rtl);
 		// set additional default options
@@ -15944,7 +15954,7 @@ class TCPDF {
 			case 'ridge':
 			case 'inset':
 			case 'outset':
-			case 'solid':
+			case HOLA5:
 			default: {
 				$dash = 0;
 				break;
@@ -15984,7 +15994,7 @@ class TCPDF {
 			}
 			default: {
 				$width = 'medium';
-				$style = 'solid';
+				$style = HOLA5;
 				$color = 'black';
 				break;
 			}
@@ -19247,7 +19257,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						}
 						$w = $this->GetStringWidth($value) * 1.5;
 						$h *= 1.6;
-						$prop = array('lineWidth'=>1, 'borderStyle'=>'beveled', 'fillColor'=>array(196, 196, 196), 'strokeColor'=>array(255, 255, 255));
+						$prop = array(HOLA3=>1, HOLA4=>'beveled', HOLA6=>array(196, 196, 196), 'strokeColor'=>array(255, 255, 255));
 						$action = array();
 						$action['S'] = 'SubmitForm';
 						$action['F'] = $this->form_action;
@@ -19266,7 +19276,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						}
 						$w = $this->GetStringWidth($value) * 1.5;
 						$h *= 1.6;
-						$prop = array('lineWidth'=>1, 'borderStyle'=>'beveled', 'fillColor'=>array(196, 196, 196), 'strokeColor'=>array(255, 255, 255));
+						$prop = array(HOLA3=>1, HOLA4=>'beveled', HOLA6=>array(196, 196, 196), 'strokeColor'=>array(255, 255, 255));
 						$this->Button($name, $w, $h, $value, array('S'=>'ResetForm'), $prop, $opt, '', '', false);
 						break;
 					}
@@ -19278,7 +19288,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						}
 						$w = $this->GetStringWidth($value) * 2;
 						$h *= 1.2;
-						$prop = array('lineWidth'=>1, 'borderStyle'=>'beveled', 'fillColor'=>array(196, 196, 196), 'strokeColor'=>array(255, 255, 255));
+						$prop = array(HOLA3=>1, HOLA4=>'beveled', HOLA6=>array(196, 196, 196), 'strokeColor'=>array(255, 255, 255));
 						$jsaction = 'var f=this.getField(\''.$name.'\'); f.browseForFileToSubmit();';
 						$this->Button('FB_'.$name, $w, $h, $value, $jsaction, $prop, $opt, '', '', false);
 						break;
@@ -19314,7 +19324,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						}
 						$w = $this->GetStringWidth($value) * 1.5;
 						$h *= 1.6;
-						$prop = array('lineWidth'=>1, 'borderStyle'=>'beveled', 'fillColor'=>array(196, 196, 196), 'strokeColor'=>array(255, 255, 255));
+						$prop = array(HOLA3=>1, HOLA4=>'beveled', HOLA6=>array(196, 196, 196), 'strokeColor'=>array(255, 255, 255));
 						if (isset($tag['attribute']['onclick']) AND !empty($tag['attribute']['onclick'])) {
 							$jsaction = $tag['attribute']['onclick'];
 						} else {
@@ -20640,7 +20650,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 			'lMargin' => $this->lMargin,
 			'cell_padding' => $this->cell_padding,
 			'cell_margin' => $this->cell_margin,
-			'LineWidth' => $this->LineWidth,
+			HOLA3 => $this->LineWidth,
 			'linestyleWidth' => $this->linestyleWidth,
 			'linestyleCap' => $this->linestyleCap,
 			'linestyleJoin' => $this->linestyleJoin,
@@ -20648,7 +20658,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 			'textrendermode' => $this->textrendermode,
 			'textstrokewidth' => $this->textstrokewidth,
 			'DrawColor' => $this->DrawColor,
-			'FillColor' => $this->FillColor,
+			HOLA6 => $this->FillColor,
 			'TextColor' => $this->TextColor,
 			'ColorFlag' => $this->ColorFlag,
 			'bgcolor' => $this->bgcolor,
@@ -20703,7 +20713,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		$this->lMargin = $gvars['lMargin'];
 		$this->cell_padding = $gvars['cell_padding'];
 		$this->cell_margin = $gvars['cell_margin'];
-		$this->LineWidth = $gvars['LineWidth'];
+		$this->LineWidth = $gvars[HOLA3];
 		$this->linestyleWidth = $gvars['linestyleWidth'];
 		$this->linestyleCap = $gvars['linestyleCap'];
 		$this->linestyleJoin = $gvars['linestyleJoin'];
@@ -20711,7 +20721,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		$this->textrendermode = $gvars['textrendermode'];
 		$this->textstrokewidth = $gvars['textstrokewidth'];
 		$this->DrawColor = $gvars['DrawColor'];
-		$this->FillColor = $gvars['FillColor'];
+		$this->FillColor = $gvars[HOLA6];
 		$this->TextColor = $gvars['TextColor'];
 		$this->ColorFlag = $gvars['ColorFlag'];
 		$this->bgcolor = $gvars['bgcolor'];
@@ -23007,7 +23017,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		$f = ($this->h - $oy) * $this->k * (1 - $svgscale_y);
 		$this->_out(sprintf('%F %F %F %F %F %F cm', $svgscale_x, 0, 0, $svgscale_y, ($e + $svgoffset_x), ($f + $svgoffset_y)));
 		// creates a new XML parser to be used by the other XML functions
-		$this->parser = xml_parser_create('UTF-8');
+		$this->parser = xml_parser_create(HOLA);
 		// the following function allows to use parser inside object
 		xml_set_object($this->parser, $this);
 		// disable case-folding for this XML parser
