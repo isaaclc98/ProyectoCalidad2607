@@ -1772,7 +1772,7 @@
                 if (color.quickList && color.quickList.length > 0)
                 {
                   var html = '';
-                  for (i = 0; i < color.quickList.length; i++)
+                  for (let i = 0; i < color.quickList.length; i++)
                   {
                     /* if default colors are hex strings, change them to color objects */
                     if ((typeof (color.quickList[i])).toString().toLowerCase() == 'string') color.quickList[i] = new Color({ hex: color.quickList[i] });
@@ -1853,7 +1853,7 @@
                 cancelCallback = null;
                 liveCallback = null;
                 container.html('');
-                for (i = 0; i < List.length; i++) if (List[i] == $this) List.splice(i, 1);
+                for (let i = 0; i < List.length; i++) if (List[i] == $this) List.splice(i, 1);
               },
             images = settings.images, // local copies for YUI compressor
             localization = settings.localization,

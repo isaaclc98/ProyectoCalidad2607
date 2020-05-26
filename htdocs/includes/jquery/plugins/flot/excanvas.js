@@ -1418,7 +1418,7 @@ if (!document.createElement('canvas').getContext) {
   p.TYPE_MISMATCH_ERR = 17;
 
   // set up externs
-  G_vmlCanvasManager = G_vmlCanvasManager_;
+  var G_vmlCanvasManager = G_vmlCanvasManager_;
   CanvasRenderingContext2D = CanvasRenderingContext2D_;
   CanvasGradient = CanvasGradient_;
   CanvasPattern = CanvasPattern_;

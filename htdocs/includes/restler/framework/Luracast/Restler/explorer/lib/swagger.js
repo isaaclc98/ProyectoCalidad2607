@@ -181,7 +181,7 @@ SwaggerApi.prototype.buildFromSpec = function(response) {
   }
   var isApi = false;
   var i;
-  for (i = 0; i < response.apis.length; i++) {
+  for (let i = 0; i < response.apis.length; i++) {
     var api = response.apis[i];
     if (api.operations) {
       var j;
@@ -1127,7 +1127,7 @@ var SwaggerRequest = function(type, url, params, opts, successCallback, errorCal
     var values = {};
     var i;
     var operationParams = this.operation.parameters;
-    for(i = 0; i < operationParams.length; i++) {
+    for(let i = 0; i < operationParams.length; i++) {
       var param = operationParams[i];
       if(param.paramType === "form")
         values[param.name] = param;
@@ -1220,7 +1220,7 @@ SwaggerRequest.prototype.setHeaders = function(params, operation) {
 
   // get params from the operation and set them in definedFileParams, definedFormParams, headers
   var i;
-  for(i = 0; i < allDefinedParams.length; i++) {
+  for(let i = 0; i < allDefinedParams.length; i++) {
     var param = allDefinedParams[i];
     if(param.paramType === "form")
       definedFormParams.push(param);

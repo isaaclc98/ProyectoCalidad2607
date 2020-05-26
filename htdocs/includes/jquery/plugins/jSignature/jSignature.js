@@ -66,7 +66,7 @@ var PubSubClass = function(context){
 			, i, l
 			, pair
 
-			for (i = 0, l = currentTopic.length; i < l; i++) {
+			for (let i = 0, l = currentTopic.length; i < l; i++) {
 				pair = currentTopic[i] // this is a [function, once_flag] array
 				fn = pair[0] 
 				if (pair[1] /* 'run once' flag set */){
@@ -75,7 +75,7 @@ var PubSubClass = function(context){
 				}
 			   	fn.apply(this.context, args)
 			}
-			for (i = 0, l = toremove.length; i < l; i++) {
+			for (let i = 0, l = toremove.length; i < l; i++) {
 			  currentTopic.splice(toremove[i], 1)
 			}
 		}

@@ -215,7 +215,7 @@ Lexer.prototype.token = function(src, top, bq) {
         cells: cap[3].replace(/\n$/, '').split('\n')
       };
 
-      for (i = 0; i < item.align.length; i++) {
+      for (let i = 0; i < item.align.length; i++) {
         if (/^ *-+: *$/.test(item.align[i])) {
           item.align[i] = 'right';
         } else if (/^ *:-+: *$/.test(item.align[i])) {
@@ -227,7 +227,7 @@ Lexer.prototype.token = function(src, top, bq) {
         }
       }
 
-      for (i = 0; i < item.cells.length; i++) {
+      for (let i = 0; i < item.cells.length; i++) {
         item.cells[i] = item.cells[i].split(/ *\| */);
       }
 
@@ -386,7 +386,7 @@ Lexer.prototype.token = function(src, top, bq) {
         cells: cap[3].replace(/(?: *\| *)?\n$/, '').split('\n')
       };
 
-      for (i = 0; i < item.align.length; i++) {
+      for (let i = 0; i < item.align.length; i++) {
         if (/^ *-+: *$/.test(item.align[i])) {
           item.align[i] = 'right';
         } else if (/^ *:-+: *$/.test(item.align[i])) {
@@ -398,7 +398,7 @@ Lexer.prototype.token = function(src, top, bq) {
         }
       }
 
-      for (i = 0; i < item.cells.length; i++) {
+      for (let i = 0; i < item.cells.length; i++) {
         item.cells[i] = item.cells[i]
           .replace(/^ *\| *| *\| *$/g, '')
           .split(/ *\| */);
@@ -991,7 +991,7 @@ Parser.prototype.tok = function() {
 
       // header
       cell = '';
-      for (i = 0; i < this.token.header.length; i++) {
+      for (let i = 0; i < this.token.header.length; i++) {
         flags = { header: true, align: this.token.align[i] };
         cell += this.renderer.tablecell(
           this.inline.output(this.token.header[i]),
@@ -1000,7 +1000,7 @@ Parser.prototype.tok = function() {
       }
       header += this.renderer.tablerow(cell);
 
-      for (i = 0; i < this.token.cells.length; i++) {
+      for (let i = 0; i < this.token.cells.length; i++) {
         row = this.token.cells[i];
 
         cell = '';

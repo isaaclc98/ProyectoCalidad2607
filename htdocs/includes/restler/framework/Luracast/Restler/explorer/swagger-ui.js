@@ -2039,7 +2039,7 @@ Resolver.prototype.processAllOf = function(root, name, definition, resolutionTab
     else if(a.$ref) { return -1; }
     else { return 1; }
   });
-  for (i = 0; i < allOf.length; i++) {
+  for (let i = 0; i < allOf.length; i++) {
     property = allOf[i];
     location = '/definitions/' + name + '/allOf';
     this.resolveInline(root, spec, property, resolutionTable, unresolvedRefs, location);
@@ -2173,7 +2173,7 @@ Resolver.prototype.resolve = function (spec, arg1, arg2, arg3) {
   var all = resolutionTable;
 
   var parts;
-  for(i = 0; i < all.length; i++) {
+  for(let i = 0; i < all.length; i++) {
     var a = all[i];
     if(root === a.root) {
       if(a.resolveAs === 'ref') {
@@ -2237,7 +2237,7 @@ Resolver.prototype.resolve = function (spec, arg1, arg2, arg3) {
             // handle relative schema
             parts = a.root.split('/');
             location = '';
-            for(i = 0; i < parts.length - 1; i++) {
+            for(let i = 0; i < parts.length - 1; i++) {
               location += parts[i] + '/';
             }
             location += a.key;
@@ -2422,7 +2422,7 @@ Resolver.prototype.countUnresolvedRefs = function(spec) {
   }
 
   // verify possible keys
-  for (i = 0; i < keys.length; i++) {
+  for (let i = 0; i < keys.length; i++) {
     var part = keys[i];
     var parts = part.split('/');
     var obj = spec;
@@ -2496,7 +2496,7 @@ Resolver.prototype.resolveInline = function (root, spec, property, resolutionTab
       p = ref.split('../');
       p2 = root.split('/');
       ref = '';
-      for(i = 0; i < p.length; i++) {
+      for(let i = 0; i < p.length; i++) {
         if(p[i] === '') {
           p2 = p2.slice(0, p2.length-1);
         }
@@ -2505,7 +2505,7 @@ Resolver.prototype.resolveInline = function (root, spec, property, resolutionTab
         }
       }
       root = '';
-      for(i = 0; i < p2.length - 1; i++) {
+      for(let i = 0; i < p2.length - 1; i++) {
         if(i > 0) { root += '/'; }
         root += p2[i];
       }
@@ -2580,7 +2580,7 @@ Resolver.prototype.resolveTo = function (root, property, resolutionTable, locati
         // relative file
         sp = root.split('/');
         lroot = '';
-        for(i = 0; i < sp.length - 1; i++) {
+        for(let i = 0; i < sp.length - 1; i++) {
           lroot += sp[i] + '/';
         }
         lroot += parts[0];
@@ -2599,7 +2599,7 @@ Resolver.prototype.resolveTo = function (root, property, resolutionTable, locati
       // relative file
       sp = root.split('/');
       lroot = '';
-      for(i = 0; i < sp.length - 1; i++) {
+      for(let i = 0; i < sp.length - 1; i++) {
         lroot += sp[i] + '/';
       }
       lroot += ref;
@@ -3299,7 +3299,7 @@ SwaggerSpecConverter.prototype.convert = function (obj, clientAuthorizations, op
   // see if this is a single-file swagger definition
   var isSingleFileSwagger = false;
   var i;
-  for(i = 0; i < obj.apis.length; i++) {
+  for(let i = 0; i < obj.apis.length; i++) {
     var api = obj.apis[i];
     if(Array.isArray(api.operations)) {
       isSingleFileSwagger = true;
@@ -3366,7 +3366,7 @@ SwaggerSpecConverter.prototype.declaration = function(obj, swagger) {
     }
   }
 
-  for(i = 0; i < obj.apis.length; i++) {
+  for(let i = 0; i < obj.apis.length; i++) {
     var api = obj.apis[i];
     var path = api.path;
     var operations = api.operations;
@@ -3442,7 +3442,7 @@ SwaggerSpecConverter.prototype.operations = function(path, resourcePath, obj, re
   var tag = this.extractTag(resourcePath);
   swagger.tags = swagger.tags || [];
   var matched = false;
-  for(i = 0; i < swagger.tags.length; i++) {
+  for(let i = 0; i < swagger.tags.length; i++) {
     var tagObject = swagger.tags[i];
     if(tagObject.name === tag) {
       matched = true;
@@ -3452,7 +3452,7 @@ SwaggerSpecConverter.prototype.operations = function(path, resourcePath, obj, re
     swagger.tags.push({name: tag});
   }
 
-  for(i = 0; i < obj.length; i++) {
+  for(let i = 0; i < obj.length; i++) {
     var existingOperation = obj[i];
     var method = (existingOperation.method || existingOperation.httpMethod).toLowerCase();
     var operation = {tags: [tag]};
@@ -3539,7 +3539,7 @@ SwaggerSpecConverter.prototype.responseMessages = function(operation, existingOp
   if(Array.isArray(existingOperation.responseMessages)) {
     var i;
     var existingResponses = existingOperation.responseMessages;
-    for(i = 0; i < existingResponses.length; i++) {
+    for(let i = 0; i < existingResponses.length; i++) {
       var existingResponse = existingResponses[i];
       var response = { description: existingResponse.message };
       if(existingResponse.code === 200) {
@@ -3573,7 +3573,7 @@ SwaggerSpecConverter.prototype.parameters = function(operation, obj) {
     return;
   }
   var i;
-  for(i = 0; i < obj.length; i++) {
+  for(let i = 0; i < obj.length; i++) {
     var existingParameter = obj[i];
     var parameter = {};
     parameter.name = existingParameter.name;
@@ -3729,7 +3729,7 @@ SwaggerSpecConverter.prototype.resourceListing = function(obj, swagger, opts, ca
     this.finish(callback, swagger);
   }
 
-  for(i = 0; i < expectedCount; i++) {
+  for(let i = 0; i < expectedCount; i++) {
     var api = obj.apis[i];
     var path = api.path;
     var absolutePath = this.getAbsolutePath(obj.swaggerVersion, this.docLocation, path);
@@ -4031,7 +4031,7 @@ var Operation = module.exports = function (parent, scheme, operationId, httpMeth
     definitions = {};
   }
 
-  for (i = 0; i < this.parameters.length; i++) {
+  for (let i = 0; i < this.parameters.length; i++) {
     var param = this.parameters[i];
 
     // Allow macro to set the default value
@@ -4442,7 +4442,7 @@ Operation.prototype.getMissingParams = function (args) {
   var missingParams = []; // check required params, track the ones that are missing
   var i;
 
-  for (i = 0; i < this.parameters.length; i++) {
+  for (let i = 0; i < this.parameters.length; i++) {
     var param = this.parameters[i];
 
     if (param.required === true) {
@@ -4733,7 +4733,7 @@ Operation.prototype.setContentTypes = function (args, opts) {
   var i;
 
   // get params from the operation and set them in definedFileParams, definedFormParams, headers
-  for (i = 0; i < allDefinedParams.length; i++) {
+  for (let i = 0; i < allDefinedParams.length; i++) {
     var param = allDefinedParams[i];
 
     if (param.in === 'formData') {
@@ -4867,7 +4867,7 @@ Operation.prototype.encodePathCollection = function (type, name, value) {
     separator = ',';
   }
 
-  for (i = 0; i < value.length; i++) {
+  for (let i = 0; i < value.length; i++) {
     if (i === 0) {
       encoded = this.encodeQueryParam(value[i]);
     } else {
@@ -4883,7 +4883,7 @@ Operation.prototype.encodeQueryCollection = function (type, name, value) {
   var i;
 
   if (type === 'default' || type === 'multi') {
-    for (i = 0; i < value.length; i++) {
+    for (let i = 0; i < value.length; i++) {
       if (i > 0) {encoded += '&';}
 
       encoded += this.encodeQueryParam(name) + '=' + this.encodeQueryParam(value[i]);
@@ -4900,7 +4900,7 @@ Operation.prototype.encodeQueryCollection = function (type, name, value) {
     } else if (type === 'pipes') {
       separator = '|';
     } else if (type === 'brackets') {
-      for (i = 0; i < value.length; i++) {
+      for (let i = 0; i < value.length; i++) {
         if (i !== 0) {
           encoded += '&';
         }
@@ -4910,7 +4910,7 @@ Operation.prototype.encodeQueryCollection = function (type, name, value) {
     }
 
     if (separator !== '') {
-      for (i = 0; i < value.length; i++) {
+      for (let i = 0; i < value.length; i++) {
         if (i === 0) {
           encoded = this.encodeQueryParam(name) + '=' + this.encodeQueryParam(value[i]);
         } else {
@@ -5347,14 +5347,14 @@ Buffer.concat = function concat (list, length) {
   var i
   if (length === undefined) {
     length = 0
-    for (i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
       length += list[i].length
     }
   }
 
   var buf = new Buffer(length)
   var pos = 0
-  for (i = 0; i < list.length; i++) {
+  for (let i = 0; i < list.length; i++) {
     var item = list[i]
     item.copy(buf, pos)
     pos += item.length
@@ -6299,7 +6299,7 @@ Buffer.prototype.copy = function copy (target, targetStart, start, end) {
     }
   } else if (len < 1000 || !Buffer.TYPED_ARRAY_SUPPORT) {
     // ascending copy from start
-    for (i = 0; i < len; i++) {
+    for (let i = 0; i < len; i++) {
       target[i + targetStart] = this[i + start]
     }
   } else {
@@ -6635,7 +6635,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 			arr[L++] = v
 		}
 
-		for (i = 0, j = 0; i < l; i += 4, j += 3) {
+		for (let i = 0, j = 0; i < l; i += 4, j += 3) {
 			tmp = (decode(b64.charAt(i)) << 18) | (decode(b64.charAt(i + 1)) << 12) | (decode(b64.charAt(i + 2)) << 6) | decode(b64.charAt(i + 3))
 			push((tmp & 0xFF0000) >> 16)
 			push((tmp & 0xFF00) >> 8)
@@ -6669,7 +6669,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 		}
 
 		// go through the array every three bytes, we'll deal with trailing stuff later
-		for (i = 0, length = uint8.length - extraBytes; i < length; i += 3) {
+		for (let i = 0, length = uint8.length - extraBytes; i < length; i += 3) {
 			temp = (uint8[i] << 16) + (uint8[i + 1] << 8) + (uint8[i + 2])
 			output += tripletToBase64(temp)
 		}
@@ -6988,7 +6988,7 @@ module.exports = isArray || function (val) {
                 remove = cookie.expiration_date <= Date.now();
                 if (cookies[cookie.name] !== undefined) {
                     cookies_list = cookies[cookie.name];
-                    for (i = 0; i < cookies_list.length; i += 1) {
+                    for (let i = 0; i < cookies_list.length; i += 1) {
                         collidable_cookie = cookies_list[i];
                         if (collidable_cookie.collidesWith(cookie)) {
                             if (remove) {
@@ -7021,7 +7021,7 @@ module.exports = isArray || function (val) {
                 if (!cookies_list) {
                     return;
                 }
-                for (i = 0; i < cookies_list.length; i += 1) {
+                for (let i = 0; i < cookies_list.length; i += 1) {
                     cookie = cookies_list[i];
                     if (cookie.expiration_date <= Date.now()) {
                         if (cookies_list.length === 0) {
@@ -7072,7 +7072,7 @@ module.exports = isArray || function (val) {
         cookies = cookies.map(function(item){
             return new Cookie(item, request_domain, request_path);
         });
-        for (i = 0; i < cookies.length; i += 1) {
+        for (let i = 0; i < cookies.length; i += 1) {
             cookie = cookies[i];
             if (this.setCookie(cookie, request_domain, request_path)) {
                 successful.push(cookie);
@@ -11639,7 +11639,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
         var i, len, ch, code = 0;
 
         len = (prefix === 'u') ? 4 : 2;
-        for (i = 0; i < len; ++i) {
+        for (let i = 0; i < len; ++i) {
             if (index < length && isHexDigit(source[index])) {
                 ch = source[index++];
                 code = code * 16 + '0123456789abcdef'.indexOf(ch.toLowerCase());
@@ -14132,7 +14132,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
             break;
         case Syntax.ArrayExpression:
             expr.type = Syntax.ArrayPattern;
-            for (i = 0; i < expr.elements.length; i++) {
+            for (let i = 0; i < expr.elements.length; i++) {
                 if (expr.elements[i] !== null) {
                     reinterpretExpressionAsPattern(expr.elements[i]);
                 }
@@ -14140,7 +14140,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
             break;
         case Syntax.ObjectExpression:
             expr.type = Syntax.ObjectPattern;
-            for (i = 0; i < expr.properties.length; i++) {
+            for (let i = 0; i < expr.properties.length; i++) {
                 reinterpretExpressionAsPattern(expr.properties[i].value);
             }
             break;
@@ -14240,7 +14240,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
                         expect('=>');
                     }
                     isBindingElement = false;
-                    for (i = 0; i < expressions.length; i++) {
+                    for (let i = 0; i < expressions.length; i++) {
                         reinterpretExpressionAsPattern(expressions[i]);
                     }
                     return {
@@ -14271,7 +14271,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
             }
 
             if (expr.type === Syntax.SequenceExpression) {
-                for (i = 0; i < expr.expressions.length; i++) {
+                for (let i = 0; i < expr.expressions.length; i++) {
                     reinterpretExpressionAsPattern(expr.expressions[i]);
                 }
             } else {
@@ -14791,7 +14791,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
             checkPatternParam(options, param.left);
             break;
         case Syntax.ArrayPattern:
-            for (i = 0; i < param.elements.length; i++) {
+            for (let i = 0; i < param.elements.length; i++) {
                 if (param.elements[i] !== null) {
                     checkPatternParam(options, param.elements[i]);
                 }
@@ -14801,7 +14801,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
             break;
         default:
             assert(param.type === Syntax.ObjectPattern, 'Invalid type');
-            for (i = 0; i < param.properties.length; i++) {
+            for (let i = 0; i < param.properties.length; i++) {
                 checkPatternParam(options, param.properties[i].value);
             }
             break;
@@ -14828,7 +14828,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
             paramSet: {}
         };
 
-        for (i = 0, len = params.length; i < len; i += 1) {
+        for (let i = 0, len = params.length; i < len; i += 1) {
             param = params[i];
             switch (param.type) {
             case Syntax.AssignmentPattern:
@@ -14855,7 +14855,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
         }
 
         if (strict || !state.allowYield) {
-            for (i = 0, len = params.length; i < len; i += 1) {
+            for (let i = 0, len = params.length; i < len; i += 1) {
                 param = params[i];
                 if (param.type === Syntax.YieldExpression) {
                     throwUnexpectedToken(lookahead);
@@ -15741,7 +15741,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
         }
 
         param = parsePattern(params);
-        for (i = 0; i < params.length; i++) {
+        for (let i = 0; i < params.length; i++) {
             key = '$' + params[i].value;
             if (Object.prototype.hasOwnProperty.call(paramMap, key)) {
                 tolerateError(Messages.DuplicateBinding, params[i].value);
@@ -15980,7 +15980,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
         }
 
         param = parsePatternWithDefault(params);
-        for (i = 0; i < params.length; i++) {
+        for (let i = 0; i < params.length; i++) {
             validateParam(options, params[i], params[i].value);
         }
 
@@ -16572,7 +16572,7 @@ module.exports = new Type('tag:yaml.org,2002:timestamp', {
     function filterTokenLocation() {
         var i, entry, token, tokens = [];
 
-        for (i = 0; i < extra.tokens.length; ++i) {
+        for (let i = 0; i < extra.tokens.length; ++i) {
             entry = extra.tokens[i];
             token = {
                 type: entry.type,
@@ -25968,7 +25968,7 @@ SwaggerUi.Views.OperationView = Backbone.View.extend({
     if (param && param.type && param.type.toLowerCase() === 'array') {
       parsed = textArea.value.split('\n');
       result = [];
-      for (i = 0; i < parsed.length; i++) {
+      for (let i = 0; i < parsed.length; i++) {
         if (parsed[i] !== null && jQuery.trim(parsed[i]).length > 0) {
           result.push(parsed[i]);
         }
@@ -25982,7 +25982,7 @@ SwaggerUi.Views.OperationView = Backbone.View.extend({
   getParamByName: function(name) {
     var i;
     if (this.model.parameters) {
-      for(i = 0; i < this.model.parameters.length; i++) {
+      for(let i = 0; i < this.model.parameters.length; i++) {
         if (this.model.parameters[i].name === name) {
           return this.model.parameters[i];
         }

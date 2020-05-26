@@ -1499,7 +1499,7 @@ EventEmitter.prototype.emit = function(type) {
 
     listeners = handler.slice();
     len = listeners.length;
-    for (i = 0; i < len; i++)
+    for (let i = 0; i < len; i++)
       listeners[i].apply(this, args);
   }
 
@@ -8073,7 +8073,7 @@ var JSHINT = (function() {
     if (JSHINT.scope === "(main)") {
       o = o || {};
 
-      for (i = 0; i < JSHINT.internals.length; i += 1) {
+      for (let i = 0; i < JSHINT.internals.length; i += 1) {
         k = JSHINT.internals[i];
         o.scope = k.elem;
         itself(k.value, o, g);
@@ -10393,7 +10393,7 @@ var scopeManager = function(state, predefined, exported, declared) {
         usedLabelNameList.push("__proto__");
       }
 
-      for (i = 0; i < usedLabelNameList.length; i++) {
+      for (let i = 0; i < usedLabelNameList.length; i++) {
         var usedLabelName = usedLabelNameList[i];
 
         var usage = currentUsages[usedLabelName];
@@ -10485,7 +10485,7 @@ var scopeManager = function(state, predefined, exported, declared) {
       if (subScope && !isUnstackingFunctionBody &&
         !isUnstackingFunctionParams && !isUnstackingFunctionOuter) {
         var labelNames = Object.keys(currentLabels);
-        for (i = 0; i < labelNames.length; i++) {
+        for (let i = 0; i < labelNames.length; i++) {
 
           var defLabelName = labelNames[i];
           if (!currentLabels[defLabelName]["(blockscoped)"] &&
@@ -11967,7 +11967,7 @@ if ([1,2].splice(0).length != 2) {
                     this.push.apply(this, insert);
                 } else {
                     this.length = lengthAfterRemove + add; // reserves space
-                    for (i = 0; i < add; ++i) {
+                    for (let i = 0; i < add; ++i) {
                         this[pos+i] = insert[i];
                     }
                 }

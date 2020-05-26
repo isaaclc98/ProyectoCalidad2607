@@ -3072,7 +3072,7 @@ if ([1,2].splice(0).length != 2) {
                     this.push.apply(this, insert);
                 } else {
                     this.length = lengthAfterRemove + add; // reserves space
-                    for (i = 0; i < add; ++i) {
+                    for (let i = 0; i < add; ++i) {
                         this[pos+i] = insert[i];
                     }
                 }

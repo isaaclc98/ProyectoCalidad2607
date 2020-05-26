@@ -942,7 +942,7 @@ Compiler.prototype = {
     if (other.children.length !== len) {
       return false;
     }
-    for (i = 0; i < len; i++) {
+    for (let i = 0; i < len; i++) {
       if (!this.children[i].equals(other.children[i])) {
         return false;
       }

@@ -6374,7 +6374,7 @@ CSSLint.addRule({
             if (compatiblePrefixes.hasOwnProperty(prop)) {
                 variations = [];
                 prefixed = compatiblePrefixes[prop].split(" ");
-                for (i = 0, len = prefixed.length; i < len; i++) {
+                for (let i = 0, len = prefixed.length; i < len; i++) {
                     variations.push("-" + prefixed[i] + "-" + prop);
                 }
                 compatiblePrefixes[prop] = variations;
@@ -6421,7 +6421,7 @@ CSSLint.addRule({
                 item,
                 propertiesSpecified;
 
-            for (i = 0, len = properties.length; i < len; i++) {
+            for (let i = 0, len = properties.length; i < len; i++) {
                 name = properties[i];
 
                 for (prop in compatiblePrefixes) {
@@ -6451,7 +6451,7 @@ CSSLint.addRule({
                     actual = value.actual;
 
                     if (full.length > actual.length) {
-                        for (i = 0, len = full.length; i < len; i++) {
+                        for (let i = 0, len = full.length; i < len; i++) {
                             item = full[i];
                             if (CSSLint.Util.indexOf(actual, item) === -1) {
                                 propertiesSpecified = (actual.length === 1) ? actual[0] : (actual.length === 2) ? actual.join(" and ") : actual.join(", ");
@@ -7273,7 +7273,7 @@ CSSLint.addRule({
             var i, len, selector, p, n, pLen, part, part2, type, currentLine, nextLine,
                 selectors = event.selectors;
 
-            for (i = 0, len = selectors.length; i < len; i++) {
+            for (let i = 0, len = selectors.length; i < len; i++) {
                 selector = selectors[i];
                 for (p = 0, pLen = selector.parts.length; p < pLen; p++) {
                     for (n = p + 1; n < pLen; n++) {
@@ -8209,7 +8209,7 @@ if ([1,2].splice(0).length != 2) {
                     this.push.apply(this, insert);
                 } else {
                     this.length = lengthAfterRemove + add; // reserves space
-                    for (i = 0; i < add; ++i) {
+                    for (let i = 0; i < add; ++i) {
                         this[pos+i] = insert[i];
                     }
                 }

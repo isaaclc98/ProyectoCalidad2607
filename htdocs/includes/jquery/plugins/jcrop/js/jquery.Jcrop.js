@@ -248,13 +248,13 @@ $.Jcrop = function(obj,opt)
 			if (real_ratio < aspect)
 			{
 				yy = y2;
-				w = rha * aspect;
+				var w = rha * aspect;
 				xx = rw < 0 ? x1 - w : w + x1;
 
 				if (xx < 0)
 				{
 					xx = 0;
-					h = Math.abs((xx - x1) / aspect);
+					var h = Math.abs((xx - x1) / aspect);
 					yy = rh < 0 ? y1 - h: h + y1;
 				}
 				else if (xx > boundx)
@@ -488,14 +488,13 @@ $.Jcrop = function(obj,opt)
 		/*}}}*/
 		function createHandles(li)/*{{{*/
 		{
-			for(i in li) handle[li[i]] = insertHandle(li[i]);
+			for(let i in li) handle[li[i]] = insertHandle(li[i]);
 		};
 		/*}}}*/
 		function moveHandles(c)/*{{{*/
 		{
 			var midvert  = Math.round((c.h / 2) - hhs),
 				midhoriz = Math.round((c.w / 2) - hhs),
-				north = west = -hhs+1,
 				east = c.w - hhs,
 				south = c.h - hhs,
 				x, y;

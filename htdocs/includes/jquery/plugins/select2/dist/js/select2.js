@@ -106,7 +106,7 @@ var requirejs, require, define;
             }
 
             //start trimDots
-            for (i = 0; i < name.length; i++) {
+            for (let i = 0; i < name.length; i++) {
                 part = name[i];
                 if (part === '.') {
                     name.splice(i, 1);
@@ -334,7 +334,7 @@ var requirejs, require, define;
             //values to the callback.
             //Default to [require, exports, module] if no deps
             deps = !deps.length && callback.length ? ['require', 'exports', 'module'] : deps;
-            for (i = 0; i < deps.length; i += 1) {
+            for (let i = 0; i < deps.length; i += 1) {
                 map = makeMap(deps[i], relParts);
                 depName = map.f;
 

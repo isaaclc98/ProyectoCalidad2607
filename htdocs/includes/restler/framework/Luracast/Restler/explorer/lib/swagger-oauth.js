@@ -22,7 +22,7 @@ function handleLogin() {
         if(Array.isArray(auth.scopes)) {
           // 1.2 support
           var i;
-          for(i = 0; i < auth.scopes.length; i++) {
+          for(let i = 0; i < auth.scopes.length; i++) {
             scopes.push(auth.scopes[i]);
           }
         }
@@ -61,7 +61,7 @@ function handleLogin() {
 
   //TODO: only display applicable scopes (will need to pass them into handleLogin)
   popup = popupDialog.find('ul.api-popup-scopes').empty();
-  for (i = 0; i < scopes.length; i ++) {
+  for (let i = 0; i < scopes.length; i ++) {
     scope = scopes[i];
     str = '<li><input type="checkbox" id="scope_' + i + '" scope="' + scope.scope + '"' +'" oauthtype="' + scope.OAuthSchemeKey +'"/>' + '<label for="scope_' + i + '">' + scope.scope ;
     if (scope.description) {

@@ -66,7 +66,7 @@ You may need to check for this in hover events.
             var newpoints = [];
             var m;
 
-            for (i = 0; i < origpoints.length; i += ps) {
+            for (let i = 0; i < origpoints.length; i += ps) {
                 x = origpoints[i];
                 y = origpoints[i + 1];
 

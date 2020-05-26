@@ -1502,7 +1502,7 @@ define("ace/mode/json/json_parse",[], function(require, exports, module) {
                         next();
                         if (ch === 'u') {
                             uffff = 0;
-                            for (i = 0; i < 4; i += 1) {
+                            for (let i = 0; i < 4; i += 1) {
                                 hex = parseInt(next(), 16);
                                 if (!isFinite(hex)) {
                                     break;
@@ -1837,7 +1837,7 @@ if ([1,2].splice(0).length != 2) {
                     this.push.apply(this, insert);
                 } else {
                     this.length = lengthAfterRemove + add; // reserves space
-                    for (i = 0; i < add; ++i) {
+                    for (let i = 0; i < add; ++i) {
                         this[pos+i] = insert[i];
                     }
                 }

@@ -225,7 +225,7 @@ exports.beautify = function(session) {
                         indentNextLine = false;
                     }
 
-                    for (i = 0; i < indent; i++)
+                    for (let i = 0; i < indent; i++)
                         code += tabString;
                 }
 
@@ -257,7 +257,7 @@ exports.beautify = function(session) {
                     roundDepth -= (value.match(/\)/g) || []).length;
                     curlyDepth -= (value.match(/\}/g) || []).length;
 
-                    for (i = 0; i < value.length; i++) {
+                    for (let i = 0; i < value.length; i++) {
                         depth--;
                         if(value.substr(i, 1)==='}' && parents[depth]==='case') {
                             depth--;

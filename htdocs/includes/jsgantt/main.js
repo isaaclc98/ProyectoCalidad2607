@@ -69,7 +69,7 @@ $(document).ready(function() {
       var i;
       var x = document.getElementsByClassName("slide");
       var d = document.getElementsByClassName("dot");
-      for (i = 0; i < x.length; i++) {
+      for (let i = 0; i < x.length; i++) {
         x[i].style.display = "none";
       }
       slideIndex++;

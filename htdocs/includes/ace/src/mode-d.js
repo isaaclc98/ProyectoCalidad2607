@@ -253,10 +253,10 @@ var DHighlightRules = function() {
                     var map = {'>':'<',']':'[',')':'(','}':'{'};
                     if(Object.keys(map).indexOf(value) != -1)
                         value = map[value];
-                    if(value != state[1]) return "string";
-                    state.shift();
-                    state.shift();
-                    
+                    if(value == state[1]) {
+                        state.shift();
+                        state.shift();
+                    }
                     return "string";
                 },
                 regex: '(?:[\\]\\)}>]+)"',
@@ -271,10 +271,10 @@ var DHighlightRules = function() {
             {
                 onMatch: function(value, currentState, state) {
                     value = value.substring(0, value.length-1);
-                    if(value != state[1]) return "string";
-                    state.shift();
-                    state.shift();
-                    
+                    if(value == state[1]) {
+                        state.shift();
+                        state.shift();
+                    }
                     return "string";
                 },
                 regex: '^(?:[A-Za-z_][a-zA-Z0-9]+)"',

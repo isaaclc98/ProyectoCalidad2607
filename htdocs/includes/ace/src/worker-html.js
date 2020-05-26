@@ -7142,7 +7142,7 @@ ParentNode.prototype.insertBetween = function(child, prev, next) {
 	child.parentNode = this;
 	child.nextSibling = next;
 	if (!prev) {
-		firstChild = child;
+		var firstChild = child;
 	} else {
 		prev.nextSibling = child;
 	}
@@ -10560,7 +10560,7 @@ EventEmitter.prototype.emit = function(type) {
 
     listeners = handler.slice();
     len = listeners.length;
-    for (i = 0; i < len; i++)
+    for (let i = 0; i < len; i++)
       listeners[i].apply(this, args);
   }
 
@@ -11044,7 +11044,7 @@ if ([1,2].splice(0).length != 2) {
                     this.push.apply(this, insert);
                 } else {
                     this.length = lengthAfterRemove + add; // reserves space
-                    for (i = 0; i < add; ++i) {
+                    for (let i = 0; i < add; ++i) {
                         this[pos+i] = insert[i];
                     }
                 }

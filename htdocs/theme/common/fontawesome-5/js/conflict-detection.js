@@ -304,7 +304,7 @@
         var c = -1732584194;
         var d = 271733878;
 
-        for (i = 0; i < x.length; i += 16) {
+        for (let i = 0; i < x.length; i += 16) {
           olda = a;
           oldb = b;
           oldc = c;
@@ -394,7 +394,7 @@
         var output = '';
         var length32 = input.length * 32;
 
-        for (i = 0; i < length32; i += 8) {
+        for (let i = 0; i < length32; i += 8) {
           output += String.fromCharCode(input[i >> 5] >>> i % 32 & 0xff);
         }
 
@@ -414,13 +414,13 @@
         var output = [];
         output[(input.length >> 2) - 1] = undefined;
 
-        for (i = 0; i < output.length; i += 1) {
+        for (let i = 0; i < output.length; i += 1) {
           output[i] = 0;
         }
 
         var length8 = input.length * 8;
 
-        for (i = 0; i < length8; i += 8) {
+        for (let i = 0; i < length8; i += 8) {
           output[i >> 5] |= (input.charCodeAt(i / 8) & 0xff) << i % 32;
         }
 
@@ -458,7 +458,7 @@
           bkey = binlMD5(bkey, key.length * 8);
         }
 
-        for (i = 0; i < 16; i += 1) {
+        for (let i = 0; i < 16; i += 1) {
           ipad[i] = bkey[i] ^ 0x36363636;
           opad[i] = bkey[i] ^ 0x5c5c5c5c;
         }
@@ -480,7 +480,7 @@
         var x;
         var i;
 
-        for (i = 0; i < input.length; i += 1) {
+        for (let i = 0; i < input.length; i += 1) {
           x = input.charCodeAt(i);
           output += hexTab.charAt(x >>> 4 & 0x0f) + hexTab.charAt(x & 0x0f);
         }

@@ -779,7 +779,7 @@ Licensed under the MIT license.
                 };
 
             axisCount = options.xaxes.length || 1;
-            for (i = 0; i < axisCount; ++i) {
+            for (let i = 0; i < axisCount; ++i) {
 
                 axisOptions = options.xaxes[i];
                 if (axisOptions && !axisOptions.tickColor) {
@@ -801,7 +801,7 @@ Licensed under the MIT license.
             }
 
             axisCount = options.yaxes.length || 1;
-            for (i = 0; i < axisCount; ++i) {
+            for (let i = 0; i < axisCount; ++i) {
 
                 axisOptions = options.yaxes[i];
                 if (axisOptions && !axisOptions.tickColor) {
@@ -865,9 +865,9 @@ Licensed under the MIT license.
                 options.series.highlightColor = options.highlightColor;
 
             // save options on axes for future reference
-            for (i = 0; i < options.xaxes.length; ++i)
+            for (let i = 0; i < options.xaxes.length; ++i)
                 getOrCreateAxis(xaxes, i + 1).options = options.xaxes[i];
-            for (i = 0; i < options.yaxes.length; ++i)
+            for (let i = 0; i < options.yaxes.length; ++i)
                 getOrCreateAxis(yaxes, i + 1).options = options.yaxes[i];
 
             // add hooks from options
@@ -922,13 +922,13 @@ Licensed under the MIT license.
         function canvasToAxisCoords(pos) {
             // return an object with x/y corresponding to all used axes
             var res = {}, i, axis;
-            for (i = 0; i < xaxes.length; ++i) {
+            for (let i = 0; i < xaxes.length; ++i) {
                 axis = xaxes[i];
                 if (axis && axis.used)
                     res["x" + axis.n] = axis.c2p(pos.left);
             }
 
-            for (i = 0; i < yaxes.length; ++i) {
+            for (let i = 0; i < yaxes.length; ++i) {
                 axis = yaxes[i];
                 if (axis && axis.used)
                     res["y" + axis.n] = axis.c2p(pos.top);
@@ -946,7 +946,7 @@ Licensed under the MIT license.
             // get canvas coords from the first pair of x/y found in pos
             var res = {}, i, axis, key;
 
-            for (i = 0; i < xaxes.length; ++i) {
+            for (let i = 0; i < xaxes.length; ++i) {
                 axis = xaxes[i];
                 if (axis && axis.used) {
                     key = "x" + axis.n;
@@ -960,7 +960,7 @@ Licensed under the MIT license.
                 }
             }
 
-            for (i = 0; i < yaxes.length; ++i) {
+            for (let i = 0; i < yaxes.length; ++i) {
                 axis = yaxes[i];
                 if (axis && axis.used) {
                     key = "y" + axis.n;
@@ -995,7 +995,7 @@ Licensed under the MIT license.
             // Subtract the number of series that already have fixed colors or
             // color indexes from the number that we still need to generate.
 
-            for (i = 0; i < series.length; ++i) {
+            for (let i = 0; i < series.length; ++i) {
                 var sc = series[i].color;
                 if (sc != null) {
                     neededColors--;
@@ -1018,7 +1018,7 @@ Licensed under the MIT license.
             var c, colors = [], colorPool = options.colors,
                 colorPoolSize = colorPool.length, variation = 0;
 
-            for (i = 0; i < neededColors; i++) {
+            for (let i = 0; i < neededColors; i++) {
 
                 c = $.color.parse(colorPool[i % colorPoolSize] || "#666");
 
@@ -1044,7 +1044,7 @@ Licensed under the MIT license.
             // Finalize the series options, filling in their colors
 
             var colori = 0, s;
-            for (i = 0; i < series.length; ++i) {
+            for (let i = 0; i < series.length; ++i) {
                 s = series[i];
 
                 // assign colors
@@ -1102,7 +1102,7 @@ Licensed under the MIT license.
                 axis.used = false;
             });
 
-            for (i = 0; i < series.length; ++i) {
+            for (let i = 0; i < series.length; ++i) {
                 s = series[i];
                 s.datapoints = { points: [] };
 
@@ -1110,7 +1110,7 @@ Licensed under the MIT license.
             }
 
             // first pass: clean and copy data
-            for (i = 0; i < series.length; ++i) {
+            for (let i = 0; i < series.length; ++i) {
                 s = series[i];
 
                 data = s.data;
@@ -1219,14 +1219,14 @@ Licensed under the MIT license.
             }
 
             // give the hooks a chance to run
-            for (i = 0; i < series.length; ++i) {
+            for (let i = 0; i < series.length; ++i) {
                 s = series[i];
 
                 executeHooks(hooks.processDatapoints, [ s, s.datapoints]);
             }
 
             // second pass: find datamax/datamin for auto-scaling
-            for (i = 0; i < series.length; ++i) {
+            for (let i = 0; i < series.length; ++i) {
                 s = series[i];
                 points = s.datapoints.points;
                 ps = s.datapoints.pointsize;
@@ -1534,7 +1534,7 @@ Licensed under the MIT license.
             // customize)
             if (minMargin == null) {
                 minMargin = 0;
-                for (i = 0; i < series.length; ++i)
+                for (let i = 0; i < series.length; ++i)
                     minMargin = Math.max(minMargin, 2 * (series[i].points.radius + series[i].points.lineWidth/2));
             }
 
@@ -1796,7 +1796,7 @@ Licensed under the MIT license.
                     axis.tickGenerator = function (axis) {
                         // copy ticks, scaled to this axis
                         var ticks = [], v, i;
-                        for (i = 0; i < otherAxis.ticks.length; ++i) {
+                        for (let i = 0; i < otherAxis.ticks.length; ++i) {
                             v = (otherAxis.ticks[i].v - otherAxis.min) / (otherAxis.max - otherAxis.min);
                             v = axis.min + v * (axis.max - axis.min);
                             ticks.push(v);
@@ -1835,7 +1835,7 @@ Licensed under the MIT license.
             // clean up/labelify the supplied ticks, copy them over
             var i, v;
             axis.ticks = [];
-            for (i = 0; i < ticks.length; ++i) {
+            for (let i = 0; i < ticks.length; ++i) {
                 var label = null;
                 var t = ticks[i];
                 if (typeof t == "object") {
@@ -1961,7 +1961,7 @@ Licensed under the MIT license.
                     markings = markings(axes);
                 }
 
-                for (i = 0; i < markings.length; ++i) {
+                for (let i = 0; i < markings.length; ++i) {
                     var m = markings[i],
                         xrange = extractRange(m, "x"),
                         yrange = extractRange(m, "y");
@@ -2078,7 +2078,7 @@ Licensed under the MIT license.
                 ctx.strokeStyle = axis.options.tickColor;
 
                 ctx.beginPath();
-                for (i = 0; i < axis.ticks.length; ++i) {
+                for (let i = 0; i < axis.ticks.length; ++i) {
                     var v = axis.ticks[i].v;
 
                     xoff = yoff = 0;
@@ -3000,7 +3000,7 @@ Licensed under the MIT license.
             octx.translate(plotOffset.left, plotOffset.top);
 
             var i, hi;
-            for (i = 0; i < highlights.length; ++i) {
+            for (let i = 0; i < highlights.length; ++i) {
                 hi = highlights[i];
 
                 if (hi.series.bars.show)

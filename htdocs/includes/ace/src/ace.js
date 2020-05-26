@@ -380,7 +380,7 @@ if ([1,2].splice(0).length != 2) {
                     this.push.apply(this, insert);
                 } else {
                     this.length = lengthAfterRemove + add; // reserves space
-                    for (i = 0; i < add; ++i) {
+                    for (let i = 0; i < add; ++i) {
                         this[pos+i] = insert[i];
                     }
                 }
@@ -5020,7 +5020,7 @@ function _computeLevels(chars, levels, len, charTypes) {
 		, action = null, cond = null, condPos = -1, i = null, ix = null, classes = [];
 
 	if (!charTypes) {
-		for (i = 0, charTypes = []; i < len; i++) {
+		for (let i = 0, charTypes = []; i < len; i++) {
 			charTypes[i] = _getCharacterType(chars[i]);
 		}
 	}
@@ -5065,7 +5065,7 @@ function _computeLevels(chars, levels, len, charTypes) {
 		hiLevel |= newLevel;
 	}
 	if (hasUBAT_S){
-		for(i = 0; i < len; i++){
+		for(let i = 0; i < len; i++){
 			if(charTypes[i] == S){
 				levels[i] = dir;
 				for(var j = i - 1; j >= 0; j--){
@@ -11702,7 +11702,7 @@ var Search = function() {
                 j--;
             
             ranges = ranges.slice(i, j + 1);
-            for (i = 0, j = ranges.length; i < j; i++) {
+            for (let i = 0, j = ranges.length; i < j; i++) {
                 ranges[i].start.row += range.start.row;
                 ranges[i].end.row += range.start.row;
             }
@@ -12017,7 +12017,7 @@ MultiHashHandler.prototype = HashHandler.prototype;
             }
 
             var commands = ckb[keyId];
-            for (i = 0; i < commands.length; i++) {
+            for (let i = 0; i < commands.length; i++) {
                 var other = commands[i];
                 var otherPos = getPosition(other);
                 if (otherPos > position)
@@ -19024,7 +19024,7 @@ var VirtualRenderer = function(container, theme) {
             return dx * (Math.pow(t - 1, 3) + 1) + x_min;
         };
 
-        for (i = 0; i < l; ++i)
+        for (let i = 0; i < l; ++i)
             steps.push(func(i / this.STEPS, fromValue, toValue - fromValue));
 
         return steps;
