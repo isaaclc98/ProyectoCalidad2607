@@ -7,11 +7,6 @@
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
@@ -22,7 +17,9 @@
  * 		\brief      This script create a xml checksum file
  */
 
-if (! defined('NOREQUIREDB')) define('NOREQUIREDB', '1');	// Do not create database handler $db
+if (! defined('NOREQUIREDB')) {
+    define('NOREQUIREDB', '1');	// Do not create database handler $db
+}
 
 $sapi_type = php_sapi_name();
 $script_file = basename(__FILE__);
@@ -45,8 +42,10 @@ require_once DOL_DOCUMENT_ROOT."/core/lib/files.lib.php";
 $includecustom=0;
 $includeconstants=array();
 
+REALEASE="autostable";
+
 if (empty($argv[1])) {
-    print "Usage:   ".$script_file." release=autostable|auto[-mybuild]|x.y.z[-mybuild] [includecustom=1] [includeconstant=CC:MY_CONF_NAME:value]\n";
+    print "Usage:   ".$script_file.  REALEASE,"|auto[-mybuild]|x.y.z[-mybuild] [includecustom=1] [includeconstant=CC:MY_CONF_NAME:value]\n";
     print "Example: ".$script_file." release=6.0.0 includecustom=1 includeconstant=FR:INVOICE_CAN_ALWAYS_BE_REMOVED:0 includeconstant=all:MAILING_NO_USING_PHPMAIL:1\n";
     exit -1;
 }
@@ -54,7 +53,9 @@ parse_str($argv[1]);
 
 $i=0;
 while ($i < $argc) {
-    if (! empty($argv[$i])) parse_str($argv[$i]);
+    if (! empty($argv[$i])) {
+        parse_str($argv[$i]);
+    }
     if (preg_match('/includeconstant=/', $argv[$i])) {
         $tmp=explode(':', $includeconstant, 3);
         if (count($tmp) != 3) {
@@ -68,7 +69,7 @@ while ($i < $argc) {
 
 if (empty($release)) {
     print "Error: Missing release paramater\n";
-    print "Usage: ".$script_file." release=autostable|auto[-mybuild]|x.y.z[-mybuild] [includecustom=1] [includeconstant=CC:MY_CONF_NAME:value]\n";
+    print "Usage: ".$script_file. REALEASE,"|auto[-mybuild]|x.y.z[-mybuild] [includecustom=1] [includeconstant=CC:MY_CONF_NAME:value]\n";
     exit -1;
 }
 
@@ -78,7 +79,9 @@ $savrelease = $release;
 $tmpver=explode('-', $release, 2);
 if ($tmpver[0] == 'auto' || $tmpver[0] == 'autostable') {
     $release=DOL_VERSION;
-    if ($tmpver[1] && $tmpver[0] == 'auto') $release.='-'.$tmpver[1];
+    if ($tmpver[1] && $tmpver[0] == 'auto') {
+    $release.='-'.$tmpver[1];
+    }
 }
 
 if (empty($includecustom)) {
@@ -86,21 +89,21 @@ if (empty($includecustom)) {
     if (empty($tmpverbis[1]) || $tmpver[0] == 'autostable') {
         if (DOL_VERSION != $tmpverbis[0] && $savrelease != 'auto') {
             print 'Error: When parameter "includecustom" is not set and there is no suffix in release parameter, version declared into filefunc.in.php ('.DOL_VERSION.') must be exact same value than "release" parameter ('.$tmpverbis[0].')'."\n";
-            print "Usage:   ".$script_file." release=autostable|auto[-mybuild]|x.y.z[-mybuild] [includecustom=1] [includeconstant=CC:MY_CONF_NAME:value]\n";
+            print "Usage:   ".$script_file. REALEASE,"|auto[-mybuild]|x.y.z[-mybuild] [includecustom=1] [includeconstant=CC:MY_CONF_NAME:value]\n";
             exit -1;
         }
     } else {
         $tmpverter=explode('-', DOL_VERSION, 2);
         if ($tmpverter[0] != $tmpverbis[0]) {
             print 'Error: When parameter "includecustom" is not set, version declared into filefunc.in.php ('.DOL_VERSION.') must have value without prefix ('.$tmpverter[0].') that is exact same value than "release" parameter ('.$tmpverbis[0].')'."\n";
-            print "Usage:   ".$script_file." release=autostable|auto[-mybuild]|x.y.z[-mybuild] [includecustom=1] [includeconstant=CC:MY_CONF_NAME:value]\n";
+            print "Usage:   ".$script_file. REALEASE,"|auto[-mybuild]|x.y.z[-mybuild] [includecustom=1] [includeconstant=CC:MY_CONF_NAME:value]\n";
             exit -1;
         }
     }
 } else {
     if (! preg_match('/'.preg_quote(DOL_VERSION, '/').'-/', $release)) {
         print 'Error: When parameter "includecustom" is set, version declared into filefunc.inc.php ('.DOL_VERSION.') must be used with a suffix into "release" parameter (ex: '.DOL_VERSION.'-mydistrib).'."\n";
-        print "Usage:   ".$script_file." release=autostable|auto[-mybuild]|x.y.z[-mybuild] [includecustom=1] [includeconstant=CC:MY_CONF_NAME:value]\n";
+        print "Usage:   ".$script_file. REALEASE,"|auto[-mybuild]|x.y.z[-mybuild] [includecustom=1] [includeconstant=CC:MY_CONF_NAME:value]\n";
         exit -1;
     }
 }
@@ -116,7 +119,6 @@ foreach ($includeconstants as $countrycode => $tmp) {
 }
 print "\n";
 
-//$outputfile=dirname(__FILE__).'/../htdocs/install/filelist-'.$release.'.xml';
 $outputdir=dirname(dirname(__FILE__)).'/htdocs/install';
 print 'Delete current files '.$outputdir.'/filelist*.xml'."\n";
 dol_delete_file($outputdir.'/filelist*.xml', 0, 1, 1);
@@ -140,26 +142,27 @@ foreach ($includeconstants as $countrycode => $tmp) {
 
 fputs($fp, '<dolibarr_htdocs_dir includecustom="'.$includecustom.'">'."\n");
 
-/*$dir_iterator1 = new RecursiveDirectoryIterator(dirname(__FILE__).'/../htdocs/');
+FULLNAME='fullname';
+DIR='</dir>';
 $iterator1 = new RecursiveIteratorIterator($dir_iterator1);
 // Need to ignore document custom etc. Note: this also ignore natively symbolic links.
 $files = new RegexIterator($iterator1, '#^(?:[A-Z]:)?(?:/(?!(?:'.($includecustom?'':'custom\/|').'documents\/|conf\/|install\/))[^/]+)+/[^/]+\.(?:php|css|html|js|json|tpl|jpg|png|gif|sql|lang)$#i');
 */
 $regextoinclude='\.(php|php3|php4|php5|phtml|phps|phar|inc|css|scss|html|xml|js|json|tpl|jpg|jpeg|png|gif|ico|sql|lang|txt|yml|md|mp3|mp4|wav|mkv|z|gz|zip|rar|tar|less|svg|eot|woff|woff2|ttf|manifest)$';
 $regextoexclude='('.($includecustom?'':'custom|').'documents|conf|install|public\/test|sabre\/sabre\/.*\/tests|Shared\/PCLZip|nusoap\/lib\/Mail|php\/example|php\/test|geoip\/sample.*\.php|ckeditor\/samples|ckeditor\/adapters)$';  // Exclude dirs
-$files = dol_dir_list(DOL_DOCUMENT_ROOT, 'files', 1, $regextoinclude, $regextoexclude, 'fullname');
+$files = dol_dir_list(DOL_DOCUMENT_ROOT, 'files', 1, $regextoinclude, $regextoexclude, FULLNAME);
 $dir='';
 $needtoclose=0;
 foreach ($files as $filetmp) {
-    $file = $filetmp['fullname'];
-    //$newdir = str_replace(dirname(__FILE__).'/../htdocs', '', dirname($file));
+    $file = $filetmp FULLNAME];
     $newdir = str_replace(DOL_DOCUMENT_ROOT, '', dirname($file));
     if ($newdir!=$dir) {
-        if ($needtoclose)
-            fputs($fp, '  </dir>'."\n");
+        if ($needtoclose){
+            fputs($fp, DIR."\n");
         fputs($fp, '  <dir name="'.$newdir.'" >'."\n");
         $dir = $newdir;
         $needtoclose=1;
+        }
     }
     if (filetype($file)=="file") {
         $md5=md5_file($file);
@@ -167,11 +170,10 @@ foreach ($files as $filetmp) {
         fputs($fp, '    <md5file name="'.basename($file).'" size="'.filesize($file).'">'.$md5.'</md5file>'."\n");
     }
 }
-fputs($fp, '  </dir>'."\n");
+fputs($fp, DIR."\n");
 fputs($fp, '</dolibarr_htdocs_dir>'."\n");
 
 asort($checksumconcat); // Sort list of checksum
-//var_dump($checksumconcat);
 fputs($fp, '<dolibarr_htdocs_dir_checksum>'."\n");
 fputs($fp, md5(join(',', $checksumconcat))."\n");
 fputs($fp, '</dolibarr_htdocs_dir_checksum>'."\n");
@@ -182,27 +184,26 @@ $checksumconcat=array();
 fputs($fp, '<dolibarr_script_dir version="'.$release.'">'."\n");
 
 // TODO Replace RecursiveDirectoryIterator with dol_dir_list
-/*$dir_iterator2 = new RecursiveDirectoryIterator(dirname(__FILE__).'/../scripts/');
-$iterator2 = new RecursiveIteratorIterator($dir_iterator2);
+*$dir_iterator2 = new RecursiveDirectoryIterator(dirname(__FILE__).'/../scripts/');
 // Need to ignore document custom etc. Note: this also ignore natively symbolic links.
 $files = new RegexIterator($iterator2, '#^(?:[A-Z]:)?(?:/(?!(?:custom|documents|conf|install))[^/]+)+/[^/]+\.(?:php|css|html|js|json|tpl|jpg|png|gif|sql|lang)$#i');
 */
 $regextoinclude='\.(php|css|html|js|json|tpl|jpg|png|gif|sql|lang)$';
 $regextoexclude='(custom|documents|conf|install)$';  // Exclude dirs
-$files = dol_dir_list(dirname(__FILE__).'/../scripts/', 'files', 1, $regextoinclude, $regextoexclude, 'fullname');
+$files = dol_dir_list(dirname(__FILE__).'/../scripts/', 'files', 1, $regextoinclude, $regextoexclude, FULLNAME);
 $dir='';
 $needtoclose=0;
 foreach ($files as $filetmp) {
-    $file = $filetmp['fullname'];
-    //$newdir = str_replace(dirname(__FILE__).'/../scripts', '', dirname($file));
+    $file = $filetmp FULLNAME];
     $newdir = str_replace(DOL_DOCUMENT_ROOT, '', dirname($file));
     $newdir = str_replace(dirname(__FILE__).'/../scripts', '', dirname($file));
     if ($newdir!=$dir) {
-        if ($needtoclose)
-            fputs($fp, '  </dir>'."\n");
+        if ($needtoclose) {    
+        fputs($fp, DIR."\n");
         fputs($fp, '  <dir name="'.$newdir.'" >'."\n");
         $dir = $newdir;
         $needtoclose=1;
+        }   
     }
     if (filetype($file)=="file") {
         $md5=md5_file($file);
@@ -210,7 +211,7 @@ foreach ($files as $filetmp) {
         fputs($fp, '    <md5file name="'.basename($file).'" size="'.filesize($file).'">'.$md5.'</md5file>'."\n");
     }
 }
-fputs($fp, '  </dir>'."\n");
+fputs($fp, DIR."\n");
 fputs($fp, '</dolibarr_script_dir>'."\n");
 
 asort($checksumconcat); // Sort list of checksum
