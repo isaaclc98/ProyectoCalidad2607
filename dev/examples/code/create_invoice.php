@@ -62,7 +62,6 @@ require_once DOL_DOCUMENT_ROOT."/compta/facture/class/facture.class.php";
 
 // Create invoice object
 $obj = new Facture($db);
-//$obj->initAsSpecimen();
 
 $obj->ref            = 'ABCDE';
 $obj->socid          = 4;	// Put id of third party (rowid in llx_societe table)
@@ -85,7 +84,9 @@ if ($idobject > 0)
 {
 	// Change status to validated
 	$result=$obj->validate($user);
-	if ($result > 0) print "OK Object created with id ".$idobject."\n";
+	if ($result > 0) {
+		print "OK Object created with id ".$idobject."\n";
+	}
 	else
 	{
 		$error++;
